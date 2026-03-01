@@ -46,6 +46,11 @@ h2 {
     margin: 0;
 }
 
+.menu-text {
+    font-family: var(--main-font);
+    color: white;
+    size: 17px;
+}
 /* adjust the padding for the boxes */
 .box-munros {
     background-color: var(--blue);
@@ -59,4 +64,46 @@ h2 {
     padding: 5%;
     padding-top: 5px;
     margin-bottom: 50px;
+}
+
+/* styling navigation menu */
+.nav-menu {
+    min-height: 50px;
+    overflow: hidden;
+    background-color: red;
+    position: relative;
+}
+
+/* hiding main menu items -- display == none until onClick is triggered */
+.nav-menu #menuLinks {
+    display: block;
+}
+
+/* styling main nav links */
+.nav-menu a {
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+}
+
+
+/* style for actual hamburger menu */
+.nav-menu a.icon{
+    background-color: var(--light-blue);
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.nav-menu a:hover {
+    background-color: var(--dark-blue);
+    color: var(--light-blue);
+}
+
+.logo {
+    background-color: var(--dark-blue);
+    color: white;
 }
