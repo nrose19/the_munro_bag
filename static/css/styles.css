@@ -11,7 +11,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 950px;
+    height: 850px;
+}
+
+.center-text {
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+    margin-top: 5px;
 }
 
 /* pages h1 container */
@@ -22,8 +29,11 @@
     height: 400px;
 }
 
-body {
+body{
     background-color: var(--dark-blue);
+}
+
+.main-body {
     background-image: url('/static/images/munros_homepage_picture.jpg');
     background-repeat: no-repeat;
     background-position: top;
@@ -42,7 +52,7 @@ h1 {
 
 
 /* h1 styling for homepage */
-h1 .center-container {
+.h1-homepage {
     font-size: 100px;
     font-weight: bold;
 }
@@ -69,6 +79,7 @@ h2 {
     color: white;
     size: 17px;
 }
+
 /* adjust the padding for the boxes */
 .box-munros {
     background-color: var(--blue);
@@ -90,18 +101,18 @@ h2 {
     position: relative;
     display: flex;
     justify-content: space-between;
+    margin: 10px; 
 }
 
 /* hiding main menu items -- display == none until onClick is triggered */
 .nav-menu #menuLinks {
-    display: none;
+    display: block;
 }
 
 /* styling main nav links */
 .nav-menu a {
     color: white;
     font-family: var(--main-font);
-    padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
     display: block;
@@ -116,12 +127,24 @@ h2 {
     top: 0;
 }
 
-.nav-menu a:hover {
+.nav-links{
+    font-size: 30px;
+}
+
+.nav-links:hover {
     background-color: var(--light-blue);
     color: var(--dark-blue);
 }
 
 .logo {
-    background-color: var(--dark-blue);
-    color: white;
+	width: 0;
+	height: 0;
+	border-left: 35px solid transparent;
+	border-right: 35px solid transparent;
+	border-bottom: 70px solid var(--blue);
+    margin:10px;
+}
+
+.logo#home{
+    border-bottom: 70px solid var(--dark-blue);
 }
