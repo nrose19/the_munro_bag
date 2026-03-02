@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+    <head>
+        <title>The Munro Bag</title>
+        <!--importing google fonts-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
+        <!--connecting our styles css sheet-->
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+<!-- make all the styles into classes (if using more than once), create id if using only once -->
+    <body>
+        <h1 class="center-container">The Munro Bag</h1>
+        <div class="nav-menu">
+            <a href="" class="logo">MB</a>
+            <div id="menuLinks">
+                <a href=" ">Home</a>
+                <a href="/munro/user_profile/">My Profile</a>
+                <a href="">Logout</a>
+            </div>
+            <a href=" " class="icon" onclick="mainToggle()">
+                <span class="menu-text"></span>
+            </a>
+        </div>
+        <div class="flex-container">
+            <div class="box-munros">
+                <h2 style="letter-spacing: 18px;">Scotland's</h2>
+                <br />
+                <h2 style="letter-spacing: 4px;">Highest  Munros</h2>
+            </div>
+            <div style="width:40%; column-gap: 10%;">
+                <div class="box-multiple" style="background-color: #4D86BB;">
+                    <h2>About Munros</h2>
+                </div>
+                <div class="box-multiple" style="background-color: #A3CAE1;">
+                    <h2>User Information</h2>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
