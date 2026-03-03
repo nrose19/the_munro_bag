@@ -96,13 +96,6 @@ h2 {
     color: white;
     size: 17px;
 }
-
-.menu-text {
-    font-family: var(--main-font);
-    color: white;
-    size: 17px;
-}
-
 /* adjust the padding for the boxes */
 .box-munros {
     background-color: var(--blue);
@@ -129,7 +122,7 @@ h2 {
 
 /* hiding main menu items -- display == none until onClick is triggered */
 .nav-menu #menuLinks {
-    display: none;
+    display: block;
 }
 
 /* styling main nav links */
