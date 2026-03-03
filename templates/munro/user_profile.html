@@ -14,7 +14,22 @@
     </head>
 
     <body>
-        <h1>User Profile</h1>
+        <div class="nav-menu">
+            <a href="/munro/" class="logo">
+                <p class="center-text">MB</p>
+            </a>
+            <div id="menuLinks">
+                <a href="/munro/" class="nav-links">Home</a>
+                <a href="/munro/user_profile/" class="nav-links">My Profile</a>
+                <a href="" class="nav-links">Logout</a>
+            </div>
+            <a href=" " class="icon" onclick="mainToggle()">
+                <span class="menu-text"></span>
+            </a>
+        </div>
+
+        <h1 class="page-container">User Profile</h1>
+
         <div>{{ user.username }}</div>
         <div>Total climbed: {{ total_climbed }}</div>
         {% for c in climbs %}
