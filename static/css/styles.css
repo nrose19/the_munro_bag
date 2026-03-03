@@ -80,6 +80,12 @@ h2 {
     size: 17px;
 }
 
+.menu-text {
+    font-family: var(--main-font);
+    color: white;
+    size: 17px;
+}
+
 /* adjust the padding for the boxes */
 .box-munros {
     background-color: var(--blue);
