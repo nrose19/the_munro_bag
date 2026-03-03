@@ -8,13 +8,16 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
+
         <!--Bootstrap coreCSS-->
         <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css"
         rel="stylesheet">
+
         <!--connecting our styles css sheet-->
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     </head>
 <!-- make all the styles into classes (if using more than once), create id if using only once -->
+
     <body class="main-body">
         <div class="nav-menu">
             <a href="/munro/" class="logo" id="home">
@@ -37,6 +40,7 @@
                 <h2 style="letter-spacing: 18px;">Scotland's</h2>
                 <br />
                 <h2 style="letter-spacing: 4px;">Highest  Munros</h2>
+
                 {% if top_munros %}
                     {% for m in top_munros %}<div>{{ m.name }}</div>{% endfor %}
                 {% endif %}
@@ -50,6 +54,7 @@
                 </div>
             </div>
         </div>
+
         <!--Bootstrap coreJavaScript-->
         <!--Placed at theendofthedocument sothepagesloadfaster-->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -65,3 +70,5 @@
         </script>
     </body>
 
+
+</html>
