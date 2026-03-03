@@ -43,7 +43,7 @@ class ClimbRecordForm(forms.ModelForm):
     class Meta:
         model = ClimbRecord
         fields = ('munro', 'climb_date', 'total_meters_climbed', 
-                  'total_distance', 'completion_time_minutes', 
+                  'total_distance', 'completion_time_hours', 
                   'star_rating', 'comments')
         widgets = {
             'comments': forms.Textarea(attrs={'rows': 3}),

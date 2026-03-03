@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>User Profile</h1>
+<div>{{ user.username }}</div>
+<div>Total climbed: {{ total_climbed }}</div>
+{% for c in climbs %}
+<div>{{ c.munro.name }} {{ c.climb_date }}</div>
+{% endfor %}
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{ user_form.as_p }}
+{{ profile_form.as_p }}
+<button type="submit">Save</button>
+</form>
+</body>
+</html>

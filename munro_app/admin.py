@@ -24,9 +24,8 @@ class ClimbRecordoAdmin(admin.ModelAdmin):
 
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ("record", "uploaded_at","storage_key")
+    list_display = ("record", "uploaded_at", "image")
 
 @admin.register(UserFavouriteMunro)
 class FavouriteAdmin(admin.ModelAdmin):
     list_display = ("user", "munro","set_at")
-

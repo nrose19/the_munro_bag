@@ -14,15 +14,14 @@ class Munro(models.Model):
     location = models.CharField(max_length=200)
     region = models.CharField(max_length=100)
 
-#made it so it CAN ONLY BE 1-5 
+    #made it so it CAN ONLY BE 1-5 
     difficulty_rating = models.IntegerField(
         help_text = "1 - 5",
         validators = [MinValueValidator (1),
         MaxValueValidator(5)],) 
 
     description = models.TextField()
-    storage_key =models.CharField(max_length = 512)
-    content_type =models.CharField(max_length= 100)
+    image = models.ImageField(upload_to='munro_images/', blank=True)
 
     #optional
     estimated_time_hours = models.DecimalField(
@@ -55,16 +54,16 @@ class ClimbRecord(models.Model):
     total_meters_climbed = models.IntegerField()
     total_distance = models.IntegerField(help_text = "Kilometres")
     
-    #ERD originally said time in mintues but chaning to hours to match Munro class.
+    # time stored in hours as per current migrations
     completion_time_hours = models.IntegerField()
 
-#again, enforcing the 1-5 range only
+    #again, enforcing the 1-5 range only
     star_rating = models.IntegerField(
         help_text = "1 - 5",
         validators = [MinValueValidator (1),
         MaxValueValidator(5)],)
 
-#auto_now_add=True -> timestamp
+    #auto_now_add=True -> timestamp
     created_at = models.DateTimeField(auto_now_add=True)
 
     #optional
@@ -88,10 +87,8 @@ class Photo(models.Model):
             # photo1, photo2, photo3 but recordID = 1 for all
     #since not using (related_name = "photo").. must write --record.photo_set.all()--
 
-#URL/key???
-    storage_key = models.CharField(max_length= 512)
+    image = models.ImageField(upload_to='climb_photos/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    content_type = models.CharField(max_length=100)
 
     def __str__(self):
         return f"Photo(s): {self.record_id}"
@@ -110,3 +107,15 @@ class UserFavouriteMunro(models.Model):
 
     def __str__(self):
         return f"{self.user}'s favourite Munro: {self.munro}"
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    profile_picture = models.ImageField(upload_to='profile_images/', blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Profile of {self.user}"

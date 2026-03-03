@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Munro Bag</h1>
+{% if top_munros %}
+{% for m in top_munros %}<div>{{ m.name }}</div>{% endfor %}
+{% endif %}
+</body>
+</html>
