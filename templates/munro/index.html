@@ -1,65 +1,71 @@
-<!DOCTYPE html>
-{% load staticfiles %}
+{% extends 'munro/base.html' %}
+{% load static %}
 
-<html>
-    <head>
-        <title>The Munro Bag</title>
-        <!--importing google fonts-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
-        <!--Bootstrap coreCSS-->
-        <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css"
-        rel="stylesheet">
-        <!--connecting our styles css sheet-->
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    </head>
-<!-- make all the styles into classes (if using more than once), create id if using only once -->
-    <body class="main-body">
-        <div class="nav-menu">
-            <a href="/munro/" class="logo" id="home">
-                <p class="center-text">MB</p>
-            </a>
-            <div id="menuLinks">
-                <a href="/munro/" class="nav-links">Home</a>
-                <a href="/munro/user_profile/" class="nav-links">My Profile</a>
-                <a href="" class="nav-links">Logout</a>
-            </div>
-            <a href="#menuLinks" class="icon" onclick="mainToggle()">
-                <!-- <span class="menu-text"></span> -->
-            </a>
-        </div>
+{% block title %}The Munro Bag - Home{% endblock %}
 
-        <h1 class="center-container h1-homepage">The Munro Bag</h1>
+{% block body_block %}
+    <div class="jumbotron text-center bg-transparent">
+        <h1 class="display-4 h1-homepage">The Munro Bag</h1>
+        <p class="lead">Your guide to bagging Scotland's 282 Munros.</p>
+    </div>
 
-        <div class="flex-container">
-            <div class="box-munros">
-                <h2 style="letter-spacing: 18px;">Scotland's</h2>
-                <br />
-                <h2 style="letter-spacing: 4px;">Highest  Munros</h2>
-            </div>
-            <div style="width:40%; column-gap: 10%;">
-                <div class="box-multiple" style="background-color: #4D86BB;">
-                    <h2>About Munros</h2>
-                </div>
-                <div class="box-multiple" style="background-color: #A3CAE1;">
-                    <h2>User Information</h2>
+    <div class="container">
+        <div class="row">
+            <!-- Top 10 Munros -->
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h2>Scotland's Highest Munros</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for munro in top_munros %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="{% url 'munro_app:munro_detail' munro.id %}">{{ munro.name }}</a>
+                                    <span class="badge badge-primary badge-pill">{{ munro.height }}m</span>
+                                </li>
+                            {% empty %}
+                                <li class="list-group-item">No Munros found.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--Bootstrap coreJavaScript-->
-        <!--Placed at theendofthedocument sothepagesloadfaster-->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script>
-            window.jQuery || document.write('<scriptsrc="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')
-        </script>
-        <script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js">
-            </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/
-            feather.min.js">
-        </script>
-        <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js">
-        </script>
-    </body>
 
-</html>
+            <!-- Sidebar -->
+            <div class="col-md-4">
+                <!-- User Highlights / Latest Climb -->
+                <div class="card mb-4" style="background-color: #A3CAE1;">
+                    <div class="card-body">
+                        <h3>User Information</h3>
+                        {% if user.is_authenticated %}
+                            <p>Welcome, {{ user.username }}!</p>
+                            {% if latest_climb %}
+                                <h5>Latest Climb:</h5>
+                                <p><strong>{{ latest_climb.munro.name }}</strong></p>
+                                <p>Date: {{ latest_climb.climb_date }}</p>
+                                <a href="{% url 'munro_app:user_profile' %}" class="btn btn-sm btn-light">View Profile</a>
+                            {% else %}
+                                <p>You haven't logged any climbs yet.</p>
+                                <a href="{% url 'munro_app:add_climb' %}" class="btn btn-sm btn-light">Add First Climb</a>
+                            {% endif %}
+                        {% else %}
+                            <p>Please log in to track your progress.</p>
+                            <a href="{% url 'munro_app:login' %}" class="btn btn-sm btn-light">Login</a>
+                            <a href="{% url 'munro_app:register' %}" class="btn btn-sm btn-light">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- About Munros Link -->
+                <div class="card mb-4" style="background-color: #4D86BB; color: white;">
+                    <div class="card-body">
+                        <h3>About Munros</h3>
+                        <p>Discover the beauty of Scotland's mountains.</p>
+                        <a href="{% url 'munro_app:munro_list' %}" class="btn btn-light">Explore All Munros</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

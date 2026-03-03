@@ -1,0 +1,13 @@
+{% extends 'munro/base.html' %}
+{% block title %}Login{% endblock %}
+{% block body_block %}
+    <div class="container mt-5">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'munro_app:register' %}">Register here</a></p>
+    </div>
+{% endblock %}
