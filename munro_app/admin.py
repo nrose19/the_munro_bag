@@ -1,20 +1,32 @@
 from django.contrib import admin
-from munro_app.models import Munro, ClimbRecord, Photo, UserProfile, UserFavouriteMunro
+from .models import Munro, ClimbRecord, Photo, UserFavouriteMunro
 
+#django built in
+# list_display - table with those columns
+# search_fields - can search for those fields
+# list_filter - sidebare filter on admin page
+
+#customize how Munnro model appears in admin
+#"register" makes is visible + manageable on the admin site
+@admin.register(Munro)
 class MunroAdmin(admin.ModelAdmin):
-    list_display = ('name', 'height', 'region', 'difficulty_rating')
-    search_fields = ('name', 'region')
-    list_filter = ('region', 'difficulty_rating')
+    list_display = ("name", "region","height", "difficulty_rating" )
+    search_fields = ("name", "region")
+    list_filter = ("region", "difficulty_rating")
 
-class ClimbRecordAdmin(admin.ModelAdmin):
-    list_display = ('user', 'munro', 'climb_date', 'star_rating')
-    list_filter = ('climb_date', 'star_rating')
+@admin.register(ClimbRecord)
+class ClimbRecordoAdmin(admin.ModelAdmin):
+    list_display = ("user", "munro","climb_date", "star_rating" )
+    search_fields = ("climb_date", "star_rating")
+    list_filter =("user__username", "munro__name")
+# the double __ is a lookup path in django. will  go to that related object and use that field
 
+
+@admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ('record', 'uploaded_at')
+    list_display = ("record", "uploaded_at","storage_key")
 
-admin.site.register(Munro, MunroAdmin)
-admin.site.register(ClimbRecord, ClimbRecordAdmin)
-admin.site.register(Photo, PhotoAdmin)
-admin.site.register(UserProfile)
-admin.site.register(UserFavouriteMunro)
+@admin.register(UserFavouriteMunro)
+class FavouriteAdmin(admin.ModelAdmin):
+    list_display = ("user", "munro","set_at")
+
