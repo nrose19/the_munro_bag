@@ -1,16 +1,109 @@
-/* .calistoga-regular {
-  font-family: "Calistoga", serif;
-  font-weight: 400;
-  font-style: normal;
-} */
+:root{
+    --dark-blue: #234473;
+    --medium-blue: #4D86BB; 
+    --blue: #7AACD3;
+    --light-blue: #A3CAE1;
+    --main-font: 'Calistoga', serif;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 950px;
+}
 
 body {
-    background-color: #234473;
+    background-color: var(--dark-blue);
+    background-image: url('/static/images/munros_homepage_picture.jpg');
+    background-repeat: no-repeat;
+    background-position: top;
+    background-attachment: scroll;
+    background-size: cover;
 }
+
 
 h1 {
     color: #FFFFFF;
-    font-family: 'Calistoga', serif;
+    font-family: var(--main-font);
     font-size: 100px;
-    position: fixed;
+    letter-spacing: 4px;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+h2 {
+    color: #FFFFFF;
+    font-family: var(--main-font);
+    font-size: 45px;
+    font-weight: lighter;
+    text-align: center;
+    margin: 0;
+}
+
+.menu-text {
+    font-family: var(--main-font);
+    color: white;
+    size: 17px;
+}
+/* adjust the padding for the boxes */
+.box-munros {
+    background-color: var(--blue);
+    padding: 5%;
+    padding-top: 50px;
+}
+
+.box-multiple {
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 5%;
+    padding-top: 5px;
+    margin-bottom: 50px;
+}
+
+/* styling navigation menu */
+.nav-menu {
+    min-height: 50px;
+    overflow: hidden;
+    background-color: red;
+    position: relative;
+}
+
+/* hiding main menu items -- display == none until onClick is triggered */
+.nav-menu #menuLinks {
+    display: block;
+}
+
+/* styling main nav links */
+.nav-menu a {
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+}
+
+
+/* style for actual hamburger menu */
+.nav-menu a.icon{
+    background-color: var(--light-blue);
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.nav-menu a:hover {
+    background-color: var(--dark-blue);
+    color: var(--light-blue);
+}
+
+.logo {
+    background-color: var(--dark-blue);
+    color: white;
 }
