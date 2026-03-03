@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 #user attributes -- django auth will handle userName, email, passwordHash
 #max_length only for text. not InterField
@@ -13,8 +14,11 @@ class Munro(models.Model):
     location = models.CharField(max_length=200)
     region = models.CharField(max_length=100)
 
-#how do i make sure they can't put 6+
-    difficulty_rating = models.IntegerField(help_text = "1 - 5") 
+#made it so it CAN ONLY BE 1-5 
+    difficulty_rating = models.IntegerField(
+        help_text = "1 - 5",
+        validators = [MinValueValidator (1),
+        MaxValueValidator(5)],) 
 
     description = models.TextField()
     storage_key =models.CharField(max_length = 512)
@@ -22,7 +26,10 @@ class Munro(models.Model):
 
     #optional
     estimated_time_hours = models.DecimalField(
-        max_digits = 4, decimal_places = 2, null = True, blank =True)
+        max_digits = 4, 
+        decimal_places = 2, 
+        null = True, 
+        blank =True)
     #add both blank = True(for form/django level) and null = true(for database level)
 
     def __str__(self):
@@ -34,17 +41,31 @@ class ClimbRecord(models.Model):
     # database -> FK stored like integer
     #integer in ERD but it behaves like onbject in python, 
 
-    user = models.ForeignKey(User, on_delete = models.CASCADE) 
-    # (settings.AUTH_USER_MODEL, on_delete = models.CASCADE)...better than import User??
-    # would need to use "from django.conf import settings" but look more into it first..dont fully get
-
-    munro = models.ForeignKey(Munro, on_delete =models.CASCADE) 
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete = models.CASCADE,
+        related_name= "climb_records",) 
+    
+    munro = models.ForeignKey(
+        Munro, 
+        on_delete =models.CASCADE,
+        related_name= "climb_records",) 
+    
     climb_date = models.DateField()
     total_meters_climbed = models.IntegerField()
     total_distance = models.IntegerField(help_text = "Kilometres")
-    completion_time_minutes = models.IntegerField()
-    star_rating = models.IntegerField(help_text= "1 - 5")
-    created_at = models.DateTimeField(auto_now_add=True) #aauto_now_add=True -> timestamp
+    
+    #ERD originally said time in mintues but chaning to hours to match Munro class.
+    completion_time_hours = models.IntegerField()
+
+#again, enforcing the 1-5 range only
+    star_rating = models.IntegerField(
+        help_text = "1 - 5",
+        validators = [MinValueValidator (1),
+        MaxValueValidator(5)],)
+
+#auto_now_add=True -> timestamp
+    created_at = models.DateTimeField(auto_now_add=True)
 
     #optional
     comments = models.TextField(null = True, blank =True)
@@ -54,7 +75,10 @@ class ClimbRecord(models.Model):
 
 
 class Photo(models.Model):
-    record = models.ForeignKey(ClimbRecord, on_delete=models.CASCADE)
+    record = models.ForeignKey(
+        ClimbRecord, 
+        on_delete=models.CASCADE,
+        related_name= "photos",)
     #each photo belongs to ONE ClimbRecord, One ClimbRecord can have many photos (one to many)
     #photo.record -> gets ClimbRecord...(2 direction of access)
     #record.photo_set.all() -> gives ALL photos attacked to that climb (reverse access)
@@ -64,7 +88,7 @@ class Photo(models.Model):
             # photo1, photo2, photo3 but recordID = 1 for all
     #since not using (related_name = "photo").. must write --record.photo_set.all()--
 
-    #URL/key
+#URL/key???
     storage_key = models.CharField(max_length= 512)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     content_type = models.CharField(max_length=100)
@@ -74,10 +98,15 @@ class Photo(models.Model):
 
 
 class UserFavouriteMunro(models.Model):
-    user =models.OneToOneField(User, on_delete=models.CASCADE)
-    munro = models.ForeignKey(Munro,on_delete=models.CASCADE)
+    user =models.OneToOneField(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE,
+        related_name= "favourite_munro")
+    munro = models.ForeignKey(
+        Munro,
+        on_delete=models.CASCADE,
+        related_name= "favourite_by")
     set_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Favourite Munro: {self.munro}"
-        # should i add {self.user}??
+        return f"{self.user}'s favourite Munro: {self.munro}"
