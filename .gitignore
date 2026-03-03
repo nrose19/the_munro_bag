@@ -1,15 +1,12 @@
-# Django
-*.log
-*.pot
-*.pyc
-__pycache__/
-local_settings.py
-db.sqlite3
-media
-media/
-media/climb_photos/
-media/munro_images/
-media/profile_images/
+# Virtual environment
+.venv/
 
-# System
-.DS_Store
+# Database
+db.sqlite3
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code settings
+.vscode/
