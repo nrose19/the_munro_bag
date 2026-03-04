@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+
+<html>
+    <head>
+        <title>The Munro Bag Login Page</title>
+        <!--importing google fonts-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
+
+        <!--Bootstrap coreCSS-->
+        <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+        <!--connecting our styles css sheet-->
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    <body>
+        <h1>login</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div>
+                {{ form.username.label_tag }} {{ form.username }}
+            </div>
+            <div>
+                {{ form.password.label_tag }} {{ form.password }}
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p>
+        Not registered? Create an account and start tracking your Munros today!
+        <a href="{% url 'registration_register' %}">Register here!</a>
+        </p>
+    </body>
+</html>

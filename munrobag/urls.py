@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# from registration.backends.simple.views import RegistrationView
 from munro_app import views
 
 app_name = 'munro_app'
@@ -23,4 +24,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('munro/', include('munro_app.urls')),
     path('admin/', admin.site.urls),
+    # path('accounts/register/', 
+    #     MyRegistrationView.as_view(),
+    # #     name='registration_register'),
+    # path('accounts/', include('registration.backends.simple.urls')),
 ]

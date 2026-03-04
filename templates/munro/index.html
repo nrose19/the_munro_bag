@@ -25,7 +25,7 @@
             </a>
             <div id="menuLinks">
                 <a href="/munro/" class="nav-links">Home</a>
-                <a href="/munro/user_profile/" class="nav-links">My Profile</a>
+                <a href="/munro/profile/" class="nav-links">My Profile</a>
                 <a href="" class="nav-links">Logout</a>
             </div>
             <a href="#menuLinks" class="icon" onclick="mainToggle()">
@@ -35,14 +35,17 @@
 
         <h1 class="center-container h1-homepage">The Munro Bag</h1>
 
+        
         <div class="flex-container">
             <div class="box-munros">
                 <h2 style="letter-spacing: 18px;">Scotland's</h2>
                 <br />
                 <h2 style="letter-spacing: 4px;">Highest  Munros</h2>
-
+                <!-- styling the highest munros -->
                 {% if top_munros %}
-                    {% for m in top_munros %}<div>{{ m.name }}</div>{% endfor %}
+                    {% for m in top_munros %}
+                    <div>{{ m.name }}</div>
+                    {% endfor %}
                 {% endif %}
             </div>
             <div style="width:40%; column-gap: 10%;">
