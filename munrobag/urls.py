@@ -14,18 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-# from registration.backends.simple.views import RegistrationView
+from django.urls import path, include, reverse
+from registration.backends.simple.views import RegistrationView
 from munro_app import views
 
 app_name = 'munro_app'
 
+
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self, user):
+        return reverse('munro_app:register')
+
+
 urlpatterns = [
     path('', views.index, name='index'),
-    path('munro/', include('munro_app.urls')),
+    path('', include('munro_app.urls')),
     path('admin/', admin.site.urls),
-    # path('accounts/register/', 
-    #     MyRegistrationView.as_view(),
-    # #     name='registration_register'),
-    # path('accounts/', include('registration.backends.simple.urls')),
+    path('accounts/login/', views.user_login, name='login'),
+
+    path('accounts/register/', 
+        MyRegistrationView.as_view(),
+        name='registration_register'),
+    path('accounts/', include('registration.backends.simple.urls')),
 ]

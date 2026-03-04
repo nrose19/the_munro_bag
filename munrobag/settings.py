@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
     #adding
     'munro_app',
-    # 'registration', #adds in registration package
+    'registration', #adds in registration package
 ]
 
 MIDDLEWARE = [
@@ -109,18 +109,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# #registration variables
-# #if TRUE, users can register.
-# REGISTRATION_OPEN = True
+#registration variables
+#if TRUE, users can register.
+REGISTRATION_OPEN = True
 
-# #if True, the user will be automattically logged in after registering
-# REGISTRATION_AUTO_LOGIN = True
+#if True, the user will be automattically logged in after registering
+REGISTRATION_AUTO_LOGIN = True
 
-# #the URL that django redirects users to after logging in 
-# LOGIN_REDIRECT_URL = 'rango:index'
+#the URL that django redirects users to after logging in 
+LOGIN_REDIRECT_URL = 'rango:index'
 
-# #the page users are directed to IF they are not logged in 
-# LOGIN_URL = 'auth_login'
+#the page users are directed to IF they are not logged in 
+LOGIN_URL = 'login'
 
 
 # Internationalization
