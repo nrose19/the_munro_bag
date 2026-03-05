@@ -5,7 +5,7 @@ app_name = 'munro_app'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('register/', views.register, name='register'),
+    #path('accounts/register/', views.register, name='register'),
     #path('accounts/login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
     path('profile/', views.user_profile, name='user_profile'),
