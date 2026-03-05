@@ -8,6 +8,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400;1,700&family=Calistoga&display=swap" rel="stylesheet">
         
       <!--Bootstrap coreCSS-->
       <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css"
@@ -27,7 +28,7 @@
               <div id="menuLinks">
                   <a href="/" class="nav-links">Home</a>
                   {% if user.is_authenticated %}
-                    <a href="/munros/">Munros</a>
+                    <a href="/munros/" class="nav-links">Munros</a>
                     <a href="/profile/" class="nav-links">My Profile</a>
                     <a href="/logout/" class="nav-links">Logout</a>
                   {% else %}
@@ -35,8 +36,10 @@
                     <a href="/accounts/register/" class="nav-links">Start Climbing!</a>
                   {% endif %}
               </div>
-              <a href="#menuLinks" class="icon" onclick="mainToggle()">
-                  <!-- <span class="menu-text"></span> -->
+              <a class="icon" id="menuToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-list nav-bar" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                </svg>
               </a>
       </div>
       <main>
@@ -57,7 +60,8 @@
       <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js">
       </script>
     {% block scripts %}
-    <script src="{% static 'js/main_script.js' %}">
+    <script src="{% static 'js/main_script.js' %}" defer></script>
+    <script>    
         window.addEventListener('DOMContentLoaded',logoColour);
     </script>
     {% endblock %}    
