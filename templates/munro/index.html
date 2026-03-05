@@ -14,12 +14,15 @@
 
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     </head> -->
+    {% block body_class %}home{% endblock %}
+
     {% block content %}
     <div>
 
         <h1 class="center-container h1-homepage">The Munro Bag</h1>
         
         <div class="flex-container">
+            {% if user.is_authenticated %}
             <div class="box-munros">
                 <h2 style="letter-spacing: 18px;">Scotland's</h2>
                 <br />
@@ -39,6 +42,7 @@
                     <h2>User Information</h2>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
     {% endblock %}

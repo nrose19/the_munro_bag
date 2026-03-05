@@ -23,7 +23,7 @@ app_name = 'munro_app'
 
 class MyRegistrationView(RegistrationView):
     def get_success_url(self, user):
-        return reverse('munro_app:register')
+        return reverse('registration_register')
 
 
 urlpatterns = [

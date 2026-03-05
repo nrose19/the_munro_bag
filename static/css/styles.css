@@ -3,7 +3,7 @@
     --medium-blue: #4D86BB; 
     --blue: #7AACD3;
     --light-blue: #A3CAE1;
-    --transparent-blue: rgba(163, 202, 225, 0.5);
+    --transparent-blue: rgba(163, 202, 225, 0.6);
     --main-font: 'Calistoga', serif;
 }
 
@@ -28,7 +28,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    height: 250px;
 }
 
 /* pages h1 container */
@@ -45,6 +45,12 @@
     justify-content: center;
     align-items: center;
     height: 400px;
+}
+
+/* styles for profile page */
+.profile-background{
+    background-color: var(--dark-blue) !important;
+    background-image: none !important;
 }
 
 /* further styles for registration pages */
@@ -56,6 +62,7 @@
     color: #000;
     font-family: var(--main-font);
     font-weight: bold;
+    margin: 60px;
 }
 
 .btn_style{
