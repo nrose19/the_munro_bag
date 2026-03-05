@@ -1,13 +1,25 @@
+// //menu icon
+// function mainToggle(e) {
+//     e.preventDefault();
+//     document.getElementById("menuLinks").classList.toggle("open");
+// }
 
-//code for menu toggle 
-function menuToggle(){
-    var menu = document.getElementById('menuLinks');
-    if (menu.style.display === "block"){
-        menu.style.display = 'none';
+//hide menu icon once clicked
+document.getElementById("menuToggle").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const menu = document.getElementById("menuLinks");
+    const icon = document.getElementById("menuToggle");
+
+    menu.classList.toggle("open");
+
+    if (menu.classList.contains("open")) {
+        icon.classList.add("hidden");
     } else {
-        menu.style.display = "block";
+        icon.classList.remove("hidden");
     }
-}
+});
+
 
 //logo colour to change when not on homepage
 function logoColour(){

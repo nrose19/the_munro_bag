@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-{% load staticfiles %}
+{% extends "base.html" %}
+{% load static %}
 
-<html>
-    <head>
-        <title>The Munro Bag Login Page</title>
-        <!--importing google fonts-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
 
-        <!--Bootstrap coreCSS-->
-        <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css"
-        rel="stylesheet">
-
-        <!--connecting our styles css sheet-->
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    </head>
-  <body>
-        <h1>login</h1>
+{% block content %}
+    <div class="form-container center-container register_main" style="height: 400px;">
+        <h1>Munros loading...</h1>
         <form method="post">
             {% csrf_token %}
             {{ form.non_field_errors }}
@@ -27,12 +14,13 @@
             <div>
                 {{ form.password.label_tag }} {{ form.password }}
             </div>
-            <button type="submit">Login</button>
+            <div class="btn-container">
+                <button type="submit" class="btn-primary btn-style">Login</button>
+            </div>
         </form>
-        <p>
+        <p class="basic-text">
         Not registered? Create an account and start tracking your Munros today!
-        <a href="{% url 'registration_register' %}">Register here!</a>
+        <a href="{% url 'registration_register' %}" class="basic-link">Register here!</a>
         </p>
-    <!-- {% block content %}{% endblock %} -->
-  </body>
-</html>
+    </div>
+{% endblock %}
