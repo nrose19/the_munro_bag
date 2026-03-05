@@ -18,10 +18,10 @@
       <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   </head>
 
-  <body class="main-body">
+  <body class="main-body {% block body_class %}{% endblock %}">
       <!-- nav bar -->
       <div class="nav-menu">
-              <a href="/" class="logo" id="home">
+              <a href="/" class="logo">
                   <p class="center-text">MB</p>
               </a>
               <div id="menuLinks">
@@ -56,6 +56,10 @@
       </script>
       <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js">
       </script>
-  
+    {% block scripts %}
+    <script src="{% static 'js/main_script.js' %}">
+        window.addEventListener('DOMContentLoaded',logoColour);
+    </script>
+    {% endblock %}    
   </body>
 </html>

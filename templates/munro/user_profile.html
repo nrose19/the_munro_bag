@@ -1,45 +1,24 @@
-<!DOCTYPE html>
-
+{% extends 'base.html' %}
 {% load staticfiles %}
 
-<html>
-    <head>
-        <title>Munro Bag User Profile</title>
-        <!--importing google fonts-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
-        <!--connecting our styles css sheet-->
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    </head>
+{% block body_class %}profile-background{% endblock %}
 
-    <body>
-        <div class="nav-menu">
-            <a href="/munro/" class="logo">
-                <p class="center-text">MB</p>
-            </a>
-            <div id="menuLinks">
-                <a href="/munro/" class="nav-links">Home</a>
-                <a href="/munro/user_profile/" class="nav-links">My Profile</a>
-                <a href="" class="nav-links">Logout</a>
-            </div>
-            <a href=" " class="icon" onclick="mainToggle()">
-                <span class="menu-text"></span>
-            </a>
-        </div>
+{% block content %}
+    <h1 class="page-container">User Profile</h1>
 
-        <h1 class="page-container">User Profile</h1>
-
-        <div>{{ user.username }}</div>
-        <div>Total climbed: {{ total_climbed }}</div>
-        {% for c in climbs %}
-        <div>{{ c.munro.name }} {{ c.climb_date }}</div>
-        {% endfor %}
-        <form method="post" enctype="multipart/form-data">
+    <div>{{ user.username }}</div>
+        
+    <div>Total climbed: {{ total_climbed }}</div>
+        
+    {% for c in climbs %}
+    <div>{{ c.munro.name }} {{ c.climb_date }}</div> 
+    {% endfor %}
+        
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ user_form.as_p }}
         {{ profile_form.as_p }}
         <button type="submit">Save</button> 
-        </form>
-    </body>
-</html>
+    </form>
+
+{% endblock %}

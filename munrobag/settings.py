@@ -117,7 +117,7 @@ REGISTRATION_OPEN = True
 REGISTRATION_AUTO_LOGIN = True
 
 #the URL that django redirects users to after logging in 
-LOGIN_REDIRECT_URL = 'rango:index'
+LOGIN_REDIRECT_URL = 'munro_app:user_profile'
 
 #the page users are directed to IF they are not logged in 
 LOGIN_URL = 'login'

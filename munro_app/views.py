@@ -47,7 +47,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'munro/register.html', {
+    return render(request, 'registration/register_form.html', {
         'user_form': user_form,
         'profile_form': profile_form
     })
@@ -61,7 +61,7 @@ def user_login(request):
             return redirect('munro_app:index')
     else:
         form = AuthenticationForm()
-    return render(request, 'munro/login.html', {'form': form})
+    return render(request, 'registration/login.html', {'form': form})
 
 @login_required
 def user_logout(request):
