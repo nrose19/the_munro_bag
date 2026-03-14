@@ -48,6 +48,16 @@ class ViewTests(TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertTrue(all(m.region == "Highlands" for m in res.context["munros"]))
 
+    def test_munro_list_search_filters_by_name(self):
+        Munro.objects.create(name="Ben Macdui", height=1309, location="Cairngorms", region="Highlands", difficulty_rating=4, description="Second")
+        Munro.objects.create(name="Schiehallion", height=1083, location="Perthshire", region="Highlands", difficulty_rating=3, description="Cone")
+        url = reverse("munro_app:munro_list")
+        res = self.client.get(url, {"search": "Mac"})
+        self.assertEqual(res.status_code, 200)
+        names = [m.name for m in res.context["munros"]]
+        self.assertIn("Ben Macdui", names)
+        self.assertNotIn("Schiehallion", names)
+
     def test_add_climb_requires_login(self):
         m = Munro.objects.create(name="Stob Binnein", height=1165, location="Crianlarich", region="Central", difficulty_rating=3, description="Ridge")
         url = reverse("munro_app:add_climb")

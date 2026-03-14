@@ -135,7 +135,7 @@ def add_climb(request):
     return render(request, 'munro/add_climb.html', {'form': form})
 
 def munro_list(request):
-    munros = Munro.objects.all().order_by('name')
+    munros = Munro.objects.all().order_by('region', 'name')
     search_query = request.GET.get('search')
     region_filter = request.GET.get('region')
     
@@ -145,12 +145,13 @@ def munro_list(request):
     if region_filter:
         munros = munros.filter(region=region_filter)
         
-    regions = Munro.objects.values_list('region', flat=True).distinct()
+    regions = Munro.objects.values_list('region', flat=True).distinct().order_by('region')
 
     return render(request, 'munro/munro_list.html', {
         'munros': munros,
         'regions': regions,
-        'search_query': search_query
+        'search_query': search_query,
+        'region_filter': region_filter,
     })
 
 def munro_detail(request, munro_id):
