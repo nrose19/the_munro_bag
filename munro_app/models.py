@@ -11,17 +11,26 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class Munro(models.Model):
     name = models.CharField(max_length=200)
     height = models.IntegerField(help_text = "Metres")
-    location = models.CharField(max_length=200)
+
+    #optional for now/for database
+    location = models.CharField(
+                                max_length=200, 
+                                null = True, 
+                                blank =True)
     region = models.CharField(max_length=100)
 
     #made it so it CAN ONLY BE 1-5 
+    #optional for now/for database
     difficulty_rating = models.IntegerField(
         help_text = "1 - 5",
         validators = [MinValueValidator (1),
-        MaxValueValidator(5)],) 
+        MaxValueValidator(5)], 
+        null = True, 
+        blank =True) 
 
-    description = models.TextField()
-    image = models.ImageField(upload_to='munro_images/', blank=True)
+    #optional for now/for database
+    description = models.TextField(null = True, blank=True)
+    image = models.ImageField(upload_to='munro_images/', null = True, blank=True)
 
     #optional
     estimated_time_hours = models.DecimalField(
