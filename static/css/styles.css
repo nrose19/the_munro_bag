@@ -24,18 +24,32 @@
     margin-top: 5px;
 }
 
+/* Search function  */
+.search {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
 /* pages h1 container */
 .page-container {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    height: 400px;
+    align-items: flex-end;
+    height: 350px;
+    white-space: nowrap;
 }
 
 
 /* styles for profile page */
 .profile-background{
     background-color: var(--dark-blue) !important;
+    background-image: none !important;
+}
+
+/* styles for munro page */
+.profile-background-munro{
+    background-color: var(--blue) !important;
     background-image: none !important;
 }
 
@@ -234,13 +248,13 @@ h2 {
 .login-link{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .login-text{
     color: white !important;
     font-family: var(--small-font);
-    font-size: 25px;
+    font-size: 28px;
 }
 
 .login-text:hover{
@@ -250,41 +264,60 @@ h2 {
 /* triangles for profile/munro page */
 .mountains{
     background-color: var(--light-blue);
-    margin-top: 130px;
-    padding-bottom: 60px;
+    min-height: 100vh;
 }
 .mountain-triangles{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    height: 250px;
     z-index: -1; /*pushes behind content */
 }
 
 .base-triangle{
-    position: absolute;
-    bottom: 0;
     width: 0;
     height: 0;
-    border-left: 300px solid transparent;
-    border-right: 300px solid transparent;
+    border-left: 330px solid transparent;
+    border-right: 330px solid transparent;
 }
 
 .mtn-left{
+    margin-right: -40px;
     border-bottom: 250px solid var(--light-blue);
-    left: 0%;
 }
 
 .mtn-middle{
-    border-left: 350px solid transparent !important;
-    border-right: 350px solid transparent !important;
-    border-bottom: 340px solid var(--light-blue);
-    left: 35%;
+    border-left: 420px solid transparent !important;
+    border-right: 420px solid transparent !important;
+    border-bottom: 360px solid var(--light-blue);
+    z-index: 0;
 }
 
 .mtn-right{
+    margin-left: -40px;
     border-bottom: 250px solid var(--light-blue);
-    left: 65%;
+}
+
+/* for Munro's page */
+.mountains-munro{
+    background-color: var(--medium-blue);
+    min-height: 100vh;
+}
+
+.mtn-left-munro{
+    margin-right: -40px;
+    border-bottom: 250px solid var(--medium-blue);
+}
+
+.mtn-middle-munro{
+    border-left: 420px solid transparent !important;
+    border-right: 420px solid transparent !important;
+    border-bottom: 360px solid var(--medium-blue);
+    z-index: 0;
+}
+
+.mtn-right-munro{
+    margin-left: -40px;
+    border-bottom: 250px solid var(--medium-blue);
 }

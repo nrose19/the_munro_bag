@@ -62,7 +62,10 @@
     {% block scripts %}
     <script src="{% static 'js/main_script.js' %}" defer></script>
     <script>    
-        window.addEventListener('DOMContentLoaded',logoColour);
+        window.addEventListener('DOMContentLoaded', () => {
+            logoColour();
+            mountainTris();
+        });
     </script>
     {% endblock %}    
   </body>
