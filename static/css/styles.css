@@ -92,7 +92,7 @@ body{
     background-image: url('/static/images/munros_homepage_picture.jpg');
     background-repeat: no-repeat;
     background-position: top;
-    background-attachment: scroll;
+    background-attachment: fixed;
     background-size: cover;
 }
 
