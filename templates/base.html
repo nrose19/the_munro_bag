@@ -21,6 +21,7 @@
 
   <body class="main-body {% block body_class %}{% endblock %}">
       <!-- nav bar -->
+      {% if user.is_authenticated %}
       <div class="nav-menu">
               <a href="/" class="logo">
                   <p class="center-text">MB</p>
@@ -28,13 +29,11 @@
               <div id="menuLinks">
                   <a href="/" class="nav-links">Home</a>
                   <a href="/munros/" class="nav-links">Munros</a>
-                  {% if user.is_authenticated %}
+                  
                     <a href="/profile/" class="nav-links">My Profile</a>
                     <a href="/logout/" class="nav-links">Logout</a>
-                  {% else %}
-                    <a href="/accounts/login/" class="nav-links">Login</a>
-                    <a href="/accounts/register/" class="nav-links">Start Climbing!</a>
-                  {% endif %}
+                  
+                    
               </div>
               <a class="icon" id="menuToggle">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-list nav-bar" viewBox="0 0 16 16">
@@ -42,6 +41,7 @@
                 </svg>
               </a>
       </div>
+      {% endif %}
       <main>
           {% block content %}
           {% endblock %}

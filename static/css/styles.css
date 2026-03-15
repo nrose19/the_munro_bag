@@ -28,25 +28,10 @@
 .page-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 250px;
-}
-
-/* pages h1 container */
-.page-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: 400px;
 }
 
-/* pages h1 container */
-.page-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 400px;
-}
 
 /* styles for profile page */
 .profile-background{
@@ -246,3 +231,60 @@ h2 {
     color: blue !important;
 }
 
+.login-link{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-text{
+    color: white !important;
+    font-family: var(--small-font);
+    font-size: 25px;
+}
+
+.login-text:hover{
+    color: var(--medium-blue);
+}
+
+/* triangles for profile/munro page */
+.mountains{
+    background-color: var(--light-blue);
+    margin-top: 130px;
+    padding-bottom: 60px;
+}
+.mountain-triangles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    z-index: -1; /*pushes behind content */
+}
+
+.base-triangle{
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 300px solid transparent;
+    border-right: 300px solid transparent;
+}
+
+.mtn-left{
+    border-bottom: 250px solid var(--light-blue);
+    left: 0%;
+}
+
+.mtn-middle{
+    border-left: 350px solid transparent !important;
+    border-right: 350px solid transparent !important;
+    border-bottom: 340px solid var(--light-blue);
+    left: 35%;
+}
+
+.mtn-right{
+    border-bottom: 250px solid var(--light-blue);
+    left: 65%;
+}

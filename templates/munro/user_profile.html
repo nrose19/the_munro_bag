@@ -4,6 +4,13 @@
 {% block body_class %}profile-background{% endblock %}
 
 {% block content %}
+
+    <div class="mountain-triangles">
+        <div class="base-triangle mtn-left"></div>
+        <div class="base-triangle mtn-middle"></div>
+        <div class="base-triangle mtn-right"></div>
+    </div>
+<div class="mountains">
     <h1 class="page-container">User Profile</h1>
 
     <div>{{ user.username }}</div>
@@ -20,5 +27,5 @@
         {{ profile_form.as_p }}
         <button type="submit">Save</button> 
     </form>
-
+</div>
 {% endblock %}

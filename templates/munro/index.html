@@ -22,6 +22,7 @@
         <div class="center-container">
             <div>
                 <h1 class="h1-homepage">The Munro Bag</h1>
+                {% if user.is_authenticated %}
                 <form method="get" action="{% url 'munro_app:munro_list' %}" style="display:flex; justify-content:center; gap:10px; margin-top: 20px;">
                     <input type="text" name="search" placeholder="Search munros" style="padding:10px; width:320px; max-width:70vw;" />
                     <button type="submit" style="padding:10px 16px;">Search</button>
@@ -29,6 +30,12 @@
                 <div style="display:flex; justify-content:center; margin-top: 12px;">
                     <a href="/munros/" class="basic-link" style="color:white !important;">Browse all munros</a>
                 </div>
+                {% else %}
+                <div class="login-link">
+                    <a href="/accounts/login/" class="login-text">Login</a>
+                    <a href="/accounts/register/" class="login-text">Start Climbing!</a>
+                </div>
+                {% endif %}
             </div>
         </div>
         
@@ -74,3 +81,5 @@
         </div>
     </div>
     {% endblock %}
+
+    
