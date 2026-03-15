@@ -23,6 +23,11 @@ def index(request):
         'top_munros': top_munros,
         'latest_climb': latest_climb,
     }
+
+    print(top_munros)
+    for m in top_munros:
+        print(m.name, m.height)
+
     return render(request, 'munro/index.html', context)
 
 def register(request):

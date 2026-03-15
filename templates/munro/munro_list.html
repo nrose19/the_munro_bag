@@ -1,42 +1,50 @@
 {% extends 'base.html' %}
 
-{% block body_class %}munros{% endblock %}
+{% block body_class %}munros profile-background-munro{% endblock %}
 
-{% block content%}
-    <h1>Munros</h1>
+{% block content%} 
+    <div class="mountain-triangles">
+        <div class="base-triangle mtn-left-munro"></div>
+        <div class="base-triangle mtn-middle-munro">
+            <h1 class="page-container">Scotland's Munros</h1>
+        </div>
+        <div class="base-triangle mtn-right-munro"></div>
+    </div>
+    <div class="mountains-munro">
+        <div class="search">
+            <form method="get" action="{% url 'munro_app:munro_list' %}">
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search_query|default:'' }}"
+                    placeholder="Search by munro name"
+                />
 
-    <form method="get" action="{% url 'munro_app:munro_list' %}">
-        <input
-            type="text"
-            name="search"
-            value="{{ search_query|default:'' }}"
-            placeholder="Search by munro name"
-        />
+                <select name="region">
+                    <option value="">All regions</option>
+                    {% for r in regions %}
+                        <option value="{{ r }}" {% if r == region_filter %}selected{% endif %}>{{ r }}</option>
+                    {% endfor %}
+                </select>
 
-        <select name="region">
-            <option value="">All regions</option>
-            {% for r in regions %}
-                <option value="{{ r }}" {% if r == region_filter %}selected{% endif %}>{{ r }}</option>
+                <button type="submit">Search</button>
+                {% if search_query or region_filter %}
+                    <a href="{% url 'munro_app:munro_list' %}">Clear</a>
+                {% endif %}
+            </form>
+        </div>
+        {% if munros %}
+            {% regroup munros by region as region_list %}
+            {% for region in region_list %}
+                <h2>{{ region.grouper }}</h2>
+                {% for m in region.list %}
+                    <div>
+                        {{ m.name }}
+                    </div>
+                {% endfor %}
             {% endfor %}
-        </select>
-
-        <button type="submit">Search</button>
-        {% if search_query or region_filter %}
-            <a href="{% url 'munro_app:munro_list' %}">Clear</a>
+        {% else %}
+            <p>No munros found.</p>
         {% endif %}
-    </form>
-
-    {% if munros %}
-        {% regroup munros by region as region_list %}
-        {% for region in region_list %}
-            <h2>{{ region.grouper }}</h2>
-            {% for m in region.list %}
-                <div>
-                    {{ m.name }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-    {% else %}
-        <p>No munros found.</p>
-    {% endif %}
+    </div>
 {% endblock %}

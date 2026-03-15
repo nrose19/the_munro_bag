@@ -4,21 +4,29 @@
 {% block body_class %}profile-background{% endblock %}
 
 {% block content %}
-    <h1 class="page-container">User Profile</h1>
 
-    <div>{{ user.username }}</div>
-        
-    <div>Total climbed: {{ total_climbed }}</div>
-        
-    {% for c in climbs %}
-    <div>{{ c.munro.name }} {{ c.climb_date }}</div> 
-    {% endfor %}
-        
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-        <button type="submit">Save</button> 
-    </form>
+    <div class="mountain-triangles">
+        <div class="base-triangle mtn-left"></div>
+        <div class="base-triangle mtn-middle">
+            <h1 class="page-container">Climbing Profile</h1>
+        </div>
+        <div class="base-triangle mtn-right"></div>
+    </div>
+    <div class="mountains">
 
+        <div>Welcome back {{ user.username }}!</div>
+            
+        <div>Total climbed: {{ total_climbed }}</div>
+            
+        {% for c in climbs %}
+        <div>{{ c.munro.name }} {{ c.climb_date }}</div> 
+        {% endfor %}
+            
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+            <button type="submit">Save</button> 
+        </form>
+    </div>
 {% endblock %}
