@@ -68,7 +68,7 @@ main {
     padding-bottom: 20px;
 }
 
-.climb-c3 {
+.climb-btn {
     background-color: var(--dark-blue);
     color: white;
     font-family: var(--small-font);
@@ -77,7 +77,7 @@ main {
     border-radius: 10px;
 }
 
-.climb-323:hover {
+.climb-btn:hover {
     background-color: var(--medium-blue);
     cursor: pointer;
     border-color: var(--medium-blue);
@@ -257,7 +257,7 @@ h2 {
 /* style for actual hamburger menu */
 .nav-menu a.icon{
     display: block;
-    /* position: absolute; */
+    position: absolute;
     right: 0;
     top: 0;
 }
@@ -288,7 +288,7 @@ svg.hidden{
 .logo {
 	width: 0;
 	height: 0;
-	border-left: 35px 3 transparent;
+	border-left: 35px solid transparent;
 	border-right: 35px solid transparent;
 	border-bottom: 70px solid var(--blue);
     margin:10px;
