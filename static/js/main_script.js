@@ -9,7 +9,7 @@ document.getElementById("menuToggle").addEventListener("click", function (e) {
     e.preventDefault();
 
     const menu = document.getElementById("menuLinks");
-    const icon = document.getElementById("menuToggle");
+    const icon = document.getElementById("menuToggle svg");
 
     menu.classList.toggle("open");
 
@@ -36,6 +36,44 @@ function logoColour(){
     }
 }
 
+//menu toggle colour to change when not on homepage
+function navColour(){
+    const nav = document.querySelector('.nav-bar path');
+    const isHome = window.location.pathname === '/';
+    const isMunros = window.location.pathname === '/munros/';
+
+    if(nav && isHome){
+        nav.style.color = '#234473'
+    } else if(nav && isMunros){
+        nav.style.color = '#4D86BB'
+    } else {
+        nav.style.color = '#A3CAE1'
+    }
+}
+
+
+//add climb modal information
+var modal = document.getElementById("addClimb");
+var btn = document.getElementById("modalBtn");
+var span = document.getElementsByClassName("close")[0];
+
+btn.onclick = function(){
+    modal.style.display = "block";
+    document.body.classList.add("modal-open");
+}
+
+span.onclick = function(){
+    modal.style.display = 'none';
+    document.body.classList.remove("modal-open");
+}
+
+window.onclick = function(event){
+    if (event.target == modal){
+        modal.style.display = 'none';
+        document.body.classList.remove("modal-open");
+    }
+}
+
 //mountain triangles to change when not on profile page
 // function mountainTris(){
 //     const triangle = document.querySelector('.base-triangle');
@@ -57,4 +95,5 @@ function logoColour(){
 window.addEventListener('DOMContentLoaded', () => {
     logoColour();
     mountainTris();
+    navColour();
 });
