@@ -12,21 +12,65 @@
         </div>
         <div class="base-triangle mtn-right"></div>
     </div>
-    <div class="mountains">
+    <div class="mountains profile-body">
+        <div class="add-climb">
+            <button id="modalBtn" class="climb-btn">Add New Climb</button>
+        </div>
+            <!-- Add Climb Modal  -->
+             <div id="addClimb" class="modal">
+                <div class="climb-content basic-text">
+                    <span class="close">&times;</span>
+                    <h1>Add Climb</h1>
+                    <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="climb-btn">Submit</button>
+                    </form>
+                </div>
+             </div>
 
-        <div>Welcome back {{ user.username }}!</div>
-            
-        <div>Total climbed: {{ total_climbed }}</div>
-            
-        {% for c in climbs %}
-        <div>{{ c.munro.name }} {{ c.climb_date }}</div> 
-        {% endfor %}
-            
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-            <button type="submit">Save</button> 
-        </form>
+        <div class="flex-container">
+            <div class="profile-info" style="background-color: #4D86BB;">
+                <h2>Welcome back {{ user.username }}!</h2>
+                
+                
+                <div>Total climbed: {{ total_climbed }}</div>
+                    
+                {% for c in climbs %}
+                <div>{{ c.munro.name }} {{ c.climb_date }}</div> 
+                {% endfor %}
+                    
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ user_form.as_p }}
+                    {{ profile_form.as_p }}
+                    <button type="submit">Save</button> 
+                </form>
+            </div>
+            <div style="width:40%; column-gap: 10%;">
+                <div class="box-multiple" style="background-color: #4D86BB;">
+                    <h2>My Latest Climb</h2>
+                        {% if latest_climb %}
+                            <div>
+                                <p><strong>Munro:</strong> {{ munro }}</p>
+                                <p><strong>Date of Climb:</strong> {{ climb_date }}</p>
+                                <p><strong>Height Climbed:</strong> {{ total_meters_climbed }} m</p>
+                                <p><strong>Distance:</strong> {{ total_distance }} km</p>
+                                <p><strong>Time:</strong> {{ completion_time_hours }} hours</p>
+                                <p><strong>Rating:</strong> {{ star_rating }}</p>
+                                <p><strong>Climb Notes:</strong> {{ comments }}</p>
+                            </div>
+                            {% else %}
+                            <div>
+                                <p class="basic-text">Climb a Munro recently? Add new a climb <a href="/add_climb/" class="basic-link">here!</a></p>
+                            </div>
+                            {% endif %}
+                </div>
+                <div class="box-multiple" style="background-color: #4D86BB;">
+                    <h2>Previously hiked...</h2>
+                        
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
