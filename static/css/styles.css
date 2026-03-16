@@ -8,6 +8,10 @@
     --small-font: "Caladea", serif;
 }
 
+main {
+    display: flex !important;
+    flex-direction: column;
+}
 
 /* homepage h1 container */
 .center-container {
@@ -271,15 +275,16 @@ h2 {
     align-items: flex-end;
     justify-content: center;
     position: relative;
-    height: 250px;
+    height: 320px;
     z-index: -1; /*pushes behind content */
 }
 
 .base-triangle{
     width: 0;
     height: 0;
-    border-left: 330px solid transparent;
-    border-right: 330px solid transparent;
+    flex-grow: 1;
+    border-left: 320px solid transparent;
+    border-right: 320px solid transparent;
 }
 
 .mtn-left{
@@ -320,4 +325,43 @@ h2 {
 .mtn-right-munro{
     margin-left: -40px;
     border-bottom: 250px solid var(--medium-blue);
+}
+
+/* Munro's page region boxes */
+.region-box ul{
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding-left: 0;
+}
+
+.region-box li {
+    flex: 0 0 calc(33.33% - 20px);
+    margin: 10px;
+}
+
+.individual-region{
+    font-family: var(--main-font);
+    font-size: 40px;
+    color: white;
+    text-align: center;
+    background-color: var(--dark-blue);
+}
+
+
+/* making the webpages responsive based on sizes */
+/* small screens */
+@media (max-width: 600px) {
+    /* boxes on munro page */
+    .individual-region{
+        flex: 1 1 calc(50% - 20px);
+    }
+}
+
+/* mobile screens */
+@media (max-width: 400px) {
+    /* boxes on munro page */
+    .individual-region{
+        flex: 1 1 100%;
+    }
 }
