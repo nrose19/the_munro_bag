@@ -57,27 +57,26 @@ var modal = document.getElementById("addClimb");
 var navModal = document.getElementById("menuLinks");
 var btn = document.getElementById("modalBtn");
 var nvBtn = document.getElementById("menuToggle")
-var span = document.getElementsByClassName("close")[0];
+var span = document.getElementsByClassName("close");
 
 btn.onclick = function(){
     modal.style.display = "block";
-    document.body.classList.add("modal-open");
 }
 
 nvBtn.onclick = function(){
     navModal.style.display = "block";
 }
 
-span.onclick = function(){
-    modal.style.display = 'none';
-    navModal.style.display = 'none';
-    document.body.classList.remove("modal-open");
+for (let i=0; i < span.length; i++) {
+    span[i].onclick = function(){
+        modal.style.display = 'none';
+        navModal.style.display = 'none';
+    }
 }
 
 window.onclick = function(event){
     if (event.target == modal){
         modal.style.display = 'none';
-        document.body.classList.remove("modal-open");
     }
 }
 
