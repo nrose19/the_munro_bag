@@ -38,23 +38,25 @@ function logoColour(){
 
 //menu toggle colour to change when not on homepage
 function navColour(){
-    const nav = document.querySelector('.nav-bar path');
+    const nav = document.querySelector('.nav-bar');
     const isHome = window.location.pathname === '/';
     const isMunros = window.location.pathname === '/munros/';
 
     if(nav && isHome){
-        nav.style.color = '#234473'
+        nav.style.fill = '#234473'
     } else if(nav && isMunros){
-        nav.style.color = '#4D86BB'
+        nav.style.fill = '#4D86BB'
     } else {
-        nav.style.color = '#A3CAE1'
+        nav.style.fill = '#A3CAE1'
     }
 }
 
 
 //add climb modal information
 var modal = document.getElementById("addClimb");
+var navModal = document.getElementById("menuLinks");
 var btn = document.getElementById("modalBtn");
+var nvBtn = document.getElementById("menuToggle")
 var span = document.getElementsByClassName("close")[0];
 
 btn.onclick = function(){
@@ -62,8 +64,13 @@ btn.onclick = function(){
     document.body.classList.add("modal-open");
 }
 
+nvBtn.onclick = function(){
+    navModal.style.display = "block";
+}
+
 span.onclick = function(){
     modal.style.display = 'none';
+    navModal.style.display = 'none';
     document.body.classList.remove("modal-open");
 }
 

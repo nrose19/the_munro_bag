@@ -5,7 +5,7 @@
 
 {% block content %}
 
-    <div class="mountain-triangles">
+    <div class="mountain-triangles" id="page-content">
         <div class="base-triangle mtn-left"></div>
         <div class="base-triangle mtn-middle">
             <h1 class="page-container">Climbing Profile</h1>
@@ -21,9 +21,44 @@
                 <div class="climb-content basic-text">
                     <span class="close">&times;</span>
                     <h1>Add Climb</h1>
-                    <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form.as_p }}
+                    <form method="post" enctype="multipart/form-data" class="modal-form">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <!-- Munro -->
+                        <p>{{ form.munro.label_tag }} {{ form.munro }}</p>
+
+                        <!-- Climb date -->
+                        <p>{{ form.climb_date.label_tag }} {{ form.climb_date }}</p>
+
+                        <!-- Total meters climbed -->
+                        <p>{{ form.total_meters.label_tag }} {{ form.total_meters }}</p>
+
+                        <!-- Total distance -->
+                        <p>{{ form.total_distance.label_tag }} {{ form.total_distance }}</p>
+
+                        <!-- Completion time -->
+                        <p>{{ form.completion_time.label_tag }} {{ form.completion_time }}</p>
+
+                        <!-- Star Rating -->
+                        <div class="form-group star-rating-box">
+                            <label>Star rating:</label>
+                            <div class="star-rating">
+                                {% for radio in form.star_rating %}
+                                    <label for="{{ radio.id_for_label }}">
+                                        {{ radio.tag }}
+                                        ★
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Comments -->
+                        <p>{{ form.comments.label_tag }} {{ form.comments }}</p>
+
+                        <!-- Photos -->
+                        <p>{{ form.photos.label_tag }} {{ form.photos }}</p>
+
                     <button type="submit" class="climb-btn">Submit</button>
                     </form>
                 </div>
@@ -62,7 +97,7 @@
                             </div>
                             {% else %}
                             <div>
-                                <p class="basic-text">Climb a Munro recently? Add new a climb <a href="/add_climb/" class="basic-link">here!</a></p>
+                                <p class="basic-text">Climb a Munro recently? Click the button up above to add a new climb!</p>
                             </div>
                             {% endif %}
                 </div>

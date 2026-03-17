@@ -92,21 +92,30 @@ main {
     top: 50%;
     transform: translate(-50%, -50%);
     width: 50%;
-    height: 75%;
-    overflow: auto;
+    height: auto;
     background-color: var(--blue);
     border-radius: 10px;
+      box-shadow: 5px 5px 30px 4px var(--dark-blue), 0px 0px 30px 4px var(--dark-blue)
 }
 
-body.model-open{
-    filter: brightness(0.95) blur(3px) !important;
-    transition: filter 0.2s ease;
-}
+/* body.modal-open #page-content,
+body.modal-open .mountains {
+    filter: brightness(0.95) blur(3px);
+    transition: filter 0.3s ease;
+} */
+
 
 .climb-content{
-    margin: 15% auto;
-    padding: 20px;
-    width: 30%;
+    margin: 0 auto;
+    padding: 40px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.modal-form{
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .close {
@@ -121,6 +130,42 @@ body.model-open{
     color: var(--dark-blue);
     text-decoration: none;
     cursor: pointer;
+}
+
+/* star ratings for add climb modal */
+.star-rating{
+    display: flex;
+    /* flex-direction: row-reverse; */
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.star-rating-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    font-size:  30px;
+    color: white;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.star-rating input:checked ~ label {
+    color: gold;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: gold;
 }
 
 /* styles for munro page */
@@ -235,6 +280,34 @@ h2 {
     margin: 10px; 
 }
 
+.nav-btn{
+    background-color: transparent;
+    border-color: transparent;
+    position: absolute !important;
+    top: 0;
+    right: 0;
+}
+
+/* Nav Modal */
+.nav-modal{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    width: auto;
+    height: auto;
+    background-color: var(--medium-blue);
+}
+
+.nav-close{
+    padding-right: 5px;
+}
+
+.modal-links{
+    padding: 18px;
+}
+
 /* hiding main menu items -- display == none until onClick is triggered */
 #menuLinks {
     display: none;
@@ -249,21 +322,12 @@ h2 {
     color: white;
     font-family: var(--main-font);
     text-decoration: none;
-    font-size: 17px;
     display: block;
 }
 
-
-/* style for actual hamburger menu */
-.nav-menu a.icon{
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
 
 .nav-links{
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .nav-links:hover {
@@ -272,17 +336,14 @@ h2 {
     cursor: pointer;
 }
 
-.nav-bar {
-    /* fill: var(--dark-blue); */
-    margin:10px;
+.nav-bar{
+    fill: var(--medium-blue);
+    font-weight: bolder;
+    margin:5px;
 }
 
 .nav-bar:hover {
     cursor: pointer;
-}
-
-svg.hidden{
-    display: none;
 }
 
 .logo {
