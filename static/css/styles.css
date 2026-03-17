@@ -61,9 +61,28 @@ main {
     flex-direction: column;
 }
 
+.edit-profile{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 200px;
+    margin-left: 200px;
+}
+
+.edit-btn{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.edit-btn:hover {
+    cursor: pointer;
+}
+
 .add-climb {
     display: flex;
-    margin-right: 200px;
     justify-content: flex-end;
     padding-bottom: 20px;
 }
@@ -173,6 +192,7 @@ body.modal-open .mountains {
     background-color: var(--blue) !important;
     background-image: none !important;
 }
+
 
 /* further styles for registration pages */
 .register_main {
@@ -366,6 +386,15 @@ h2 {
     font-weight: bold;
     color: #000;
     margin-top: 15px;
+}
+
+.climb-txt {
+    text-align: left;
+    font-family: var(--small-font);
+    font-size: 22px;
+    font-weight: bold;
+    color: #000;
+    margin-top: 30px;
 }
 
 .long-text {
