@@ -17,6 +17,9 @@
       <!-- CSS loaded -->
       {% load static %}
       <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+      <!-- favicon website tab logo  -->
+       <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
   </head>
 
   <body class="main-body {% block body_class %}{% endblock %}">
@@ -26,20 +29,22 @@
               <a href="/" class="logo">
                   <p class="center-text">MB</p>
               </a>
-              <div id="menuLinks">
-                  <a href="/" class="nav-links">Home</a>
-                  <a href="/munros/" class="nav-links">Munros</a>
-                  
+              <!-- nav modal -->
+              <div id="menuLinks" class="nav-modal">
+                <span class="close nav-close">&times;</span>
+                <div class="modal-links">
+                    <a href="/" class="nav-links">Home</a>
+                    <a href="/munros/" class="nav-links">Munros</a>
+                    
                     <a href="/profile/" class="nav-links">My Profile</a>
                     <a href="/logout/" class="nav-links">Logout</a>
-                  
-                    
+                </div>  
               </div>
-              <a class="icon" id="menuToggle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-list nav-bar" viewBox="0 0 16 16">
+              <button class="icon nav-btn" id="menuToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-list nav-bar" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
                 </svg>
-              </a>
+              </button>
       </div>
       {% endif %}
       <main>

@@ -101,6 +101,9 @@ def user_profile(request):
         user_form = UserEditForm(instance=user)
         profile_form = UserProfileForm(instance=profile)
 
+    #adding in 'add climb' form here for the user modal 
+    climb_form = ClimbRecordForm()
+
     context = {
         'profile': profile,
         'climbs': climbs,
@@ -109,6 +112,7 @@ def user_profile(request):
         'latest_climb': latest_climb,
         'user_form': user_form,
         'profile_form': profile_form,
+        'form': climb_form
     }
     return render(request, 'munro/user_profile.html', context)
 
@@ -137,7 +141,7 @@ def add_climb(request):
     else:
         form = ClimbRecordForm(initial=initial_data)
 
-    return render(request, 'munro/add_climb.html', {'form': form})
+    return render(request, 'munro/user_profile.html', {'form': form})
 
 def munro_list(request):
     munros = Munro.objects.all().order_by('region', 'name')

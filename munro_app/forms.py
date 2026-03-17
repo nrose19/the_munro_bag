@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from munro_app.models import UserProfile, ClimbRecord, Munro
+from django.db import models
 
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
@@ -39,6 +40,12 @@ class UserEditForm(forms.ModelForm):
 class ClimbRecordForm(forms.ModelForm):
     climb_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     photos = forms.FileField(widget=MultipleFileInput(attrs={'multiple': True}), required=False)
+    # star_rating = models.IntegerField(choices=[(1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5')])
+
+    star_rating = forms.ChoiceField(
+        choices=[(i,i) for i in range(1,6)],
+        widget=forms.RadioSelect()
+    )
     
     class Meta:
         model = ClimbRecord
@@ -47,4 +54,5 @@ class ClimbRecordForm(forms.ModelForm):
                   'star_rating', 'comments')
         widgets = {
             'comments': forms.Textarea(attrs={'rows': 3}),
+            # 'star_rating': forms.RadioSelect() \
         }
