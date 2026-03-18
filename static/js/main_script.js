@@ -63,6 +63,8 @@ window.addEventListener('DOMContentLoaded', () => {
     logoColour();
     // mountainTris();
     navColour();
+        
+
 
     //add climb modal information
     var modal = document.getElementById("addClimb");
