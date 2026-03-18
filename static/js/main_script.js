@@ -63,7 +63,6 @@ window.addEventListener('DOMContentLoaded', () => {
     logoColour();
     // mountainTris();
     navColour();
-        
 
 
     //add climb modal information
@@ -130,4 +129,16 @@ window.addEventListener('DOMContentLoaded', () => {
             document.body.classList.remove("modal-open");
         }
     }
+
+
+    //latest climb photos
+    let currentPhoto = 0;
+    const photos = document.querySelectorAll('.carousel-photo');
+
+    function changePhoto(direction){
+        photos[currentPhoto].style.display = 'none';
+        currentPhoto = (currentPhoto + direction + photos.length) % photos.length;
+        photos[currentPhoto].style.display = 'block';
+    }
+
 });

@@ -51,9 +51,9 @@
                         <div class="long-text">
                             {% for m in region.list %}
                                 <div class="munro-row">
-                                    <span class="munro-left">{{ m.name }}</span>
+                                    <span class="munro-left {% if m.id in climbed_ids %}climbed-munro{% endif %}">{{ m.name }}</span>
                                     <span class="munro-dots"></span>
-                                    <span class="munro-right">{{ m.height }} m</span>
+                                    <span class="munro-right {% if m.id in climbed_ids %}climbed-munro{% endif %}">{{ m.height }} m</span>
                                 </div>
                             {% endfor %}
                         </div>
