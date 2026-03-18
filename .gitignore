@@ -7,8 +7,13 @@ db.sqlite3
 # Python cache
 __pycache__/
 *.pyc
+munrobag\__pycache__
 
 # VS Code settings
+.vscode/
+
+#env
+.env
 .vscode/media/
 __pycache__/
 *.pyc
