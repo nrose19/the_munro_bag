@@ -43,19 +43,25 @@
             {% if user.is_authenticated %}
             <div class="box-munros">
                 <h2 style="letter-spacing: 18px;">Scotland's</h2>
-                <br />
                 <h2 style="letter-spacing: 4px;">Highest  Munros</h2>
                 <!-- styling the highest munros -->
+                <div style="margin-top: 30px;">
                 {% if top_munros %}
                     {% for m in top_munros %}
-                    <div class="top-munro">{{ m.name }}</div>
+                        <div class="top-munro">
+                            <span class="munro-left">{{ m.name }}</span>
+                            <span class="munro-dots"></span>
+                            <span class="munro-right">{{ m.height }} m</span>
+                        </div>
                     {% endfor %}
                 {% endif %}
+                </div>
             </div>
             <div style="width:40%; column-gap: 10%;">
                     <div class="box-multiple" style="background-color: #A3CAE1 !important;">
                         <h2>My Latest Climb</h2>
                         {% if latest_climb %}
+                        <div class="flex-container">
                             <div class="basic-text" style="text-align: left; margin-left: 20px;">
                                 <p><strong>Munro:</strong> {{ latest_climb.munro.name }}</p>
                                 <p><strong>Date of Climb:</strong> {{ latest_climb.climb_date }}</p>
@@ -63,10 +69,26 @@
                                 <p><strong>Distance:</strong> {{ latest_climb.total_distance }} km</p>
                                 <p><strong>Time:</strong> {{ latest_climb.completion_time_hours }} hours</p>
                                 <p><strong>Rating:</strong> {{ latest_climb.star_rating }} / 5</p>
-                                {% if latest_climb.comments %}
-                                <p><strong>Climb Notes:</strong> {{ latest_climb.comments }}</p>
-                                {% endif %}
                             </div>
+                            {% if latest_climb_photos %}
+                            <div class="display-photo" style="display: flex; flex-direction: column;">
+                                {% for photo in latest_climb_photos %}
+                                    <img src="{{ photo.image.url }}"
+                                    alt="Photo from {{ latest_climb.munro.name }}"
+                                    class="carousel-photo climb-img {% if not forloop.first %}carousel-hidden{% endif %}"
+                                    data-index="{{ forloop.counter0 }}"
+                                    >
+                                {% endfor %}
+                                <div style="display: flex; flex-direction: row;">
+                                    <button onclick="changePhoto(-1)" class="edit-btn">← Prev</button>
+                                    <button onclick="changePhoto(1)" class="edit-btn">Next →</button> 
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                                {% if latest_climb.comments %}
+                                <p class="long-text" style="color: black !important; text-align: left; margin-left: 20px;"><strong class="basic-text">Climb Notes:</strong> {{ latest_climb.comments }}</p>
+                                {% endif %}
                         {% else %}
                             <div>
                                 <p class="basic-text">Climb a Munro recently? Make sure to log it on your <a href="/profile/" class="basic-link">profile!</a></p>

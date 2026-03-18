@@ -8,12 +8,15 @@ from munro_app.models import Munro, ClimbRecord, Photo, UserProfile, UserFavouri
 from munro_app.forms import UserForm, UserProfileForm, UserEditForm, ClimbRecordForm
 
 def index(request):
-    top_munros = Munro.objects.order_by('-height')[:10]
+    top_munros = Munro.objects.order_by('-height')[:15]
     latest_climb = None
+    latest_climb_photos = []
     
     if request.user.is_authenticated:
         latest_climb = ClimbRecord.objects.filter(user=request.user).order_by('-climb_date', '-created_at').first()
-        
+        if latest_climb:
+            latest_climb_photos = latest_climb.photos.all()
+
     search_query = request.GET.get('search', '')
     if search_query:
         # Simple search for now, could redirect to list view
@@ -22,6 +25,7 @@ def index(request):
     context = {
         'top_munros': top_munros,
         'latest_climb': latest_climb,
+        'latest_climb_photos': latest_climb_photos,
     }
 
     print(top_munros)
@@ -207,11 +211,18 @@ def munro_list(request):
         
     regions = Munro.objects.values_list('region', flat=True).distinct().order_by('region')
 
+    climbed_ids = set()
+    if request.user.is_authenticated:
+        climbed_ids = set(
+            ClimbRecord.objects.filter(user=request.user).values_list('munro_id',flat=True)
+        )
+
     return render(request, 'munro/munro_list.html', {
         'munros': munros,
         'regions': regions,
         'search_query': search_query,
         'region_filter': region_filter,
+        'climbed_ids': climbed_ids,
     })
 
 @login_required
