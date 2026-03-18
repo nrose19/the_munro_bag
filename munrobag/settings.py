@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-insecure-secret-key-change
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "true").lower() in ("1", "true", "yes", "y", "on")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['the_munro_bag.onrender.com', 'localhost']
 
 
 # Application definition
