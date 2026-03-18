@@ -159,8 +159,8 @@
                                         <p><u>Total Munros climbed:</u> {{ total_climbed }}</p>
                                         <p><u>Total distance hiked:</u> {{ total_distance }} km</p>
                                         <p><u>Favourite munro:</u> 
-                                            {% if is_favourite %}
-                                                {{ munro }}
+                                            {% if fav_munro %}
+                                                {{ fav_munro.name }}
                                             {% else %} 
                                                 You don't have a favourite yet. Keep climbing!
                                             {% endif %}

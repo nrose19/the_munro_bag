@@ -96,6 +96,12 @@ def user_profile(request):
     latest_climb = climbs_list[0] if climbs_list else None
     previously_hiked = climbs_list[1:] if len(climbs_list) > 1 else []
     
+    # Get favourite munro
+    try:
+        fav_munro = UserFavouriteMunro.objects.get(user=user).munro
+    except UserFavouriteMunro.DoesNotExist:
+        fav_munro = None
+    
     climb_modal_open = False
     
     # Forms for editing
@@ -157,11 +163,18 @@ def user_profile(request):
     latest_climb = climbs_list[0] if climbs_list else None
     previously_hiked = climbs_list[1:] if len(climbs_list) > 1 else []
 
+    # Refresh favourite munro in case it changed
+    try:
+        fav_munro = UserFavouriteMunro.objects.get(user=user).munro
+    except UserFavouriteMunro.DoesNotExist:
+        fav_munro = None
+
     context = {
         'profile': profile,
         'climbs': climbs,
         'total_climbed': total_climbed,
         'total_distance': total_distance,
+        'fav_munro': fav_munro,
         'latest_climb': latest_climb,
         'previously_hiked': previously_hiked,
         'user_form': user_form,
