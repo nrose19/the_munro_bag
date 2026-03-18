@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.db.models import Sum
-from munro_app.models import Munro, ClimbRecord, Photo, UserProfile
+from munro_app.models import Munro, ClimbRecord, Photo, UserProfile, UserFavouriteMunro
 from munro_app.forms import UserForm, UserProfileForm, UserEditForm, ClimbRecordForm
 
 def index(request):
@@ -12,7 +12,7 @@ def index(request):
     latest_climb = None
     
     if request.user.is_authenticated:
-        latest_climb = ClimbRecord.objects.filter(user=request.user).order_by('-climb_date').first()
+        latest_climb = ClimbRecord.objects.filter(user=request.user).order_by('-climb_date', '-created_at').first()
         
     search_query = request.GET.get('search', '')
     if search_query:
@@ -82,27 +82,76 @@ def user_profile(request):
         profile = UserProfile.objects.create(user=user)
 
     # Stats
-    climbs = ClimbRecord.objects.filter(user=user).order_by('-climb_date')
+    # Order by climb_date descending, then by created_at descending to ensure the most recently added records appear first
+    climbs = ClimbRecord.objects.filter(user=user).order_by('-climb_date', '-created_at')
     total_climbed = climbs.count()
     total_distance = climbs.aggregate(Sum('total_distance'))['total_distance__sum'] or 0
-    latest_climb = climbs.first()
+    
+    # We must evaluate the queryset to a list to properly slice it and avoid issues with re-evaluating querysets after changes
+    climbs_list = list(climbs)
+    latest_climb = climbs_list[0] if climbs_list else None
+    previously_hiked = climbs_list[1:] if len(climbs_list) > 1 else []
+    
+    climb_modal_open = False
     
     # Forms for editing
-    if request.method == 'POST':
+    if request.method == 'POST' and 'profile_submit' in request.POST:
         user_form = UserEditForm(request.POST, instance=user)
         profile_form = UserProfileForm(request.POST, request.FILES, instance=profile)
+        climb_form = ClimbRecordForm()
         
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             messages.success(request, "Profile updated successfully!")
             return redirect('munro_app:user_profile')
+    elif request.method == 'POST' and 'climb_submit' in request.POST:
+        user_form = UserEditForm(instance=user)
+        profile_form = UserProfileForm(instance=profile)
+        climb_form = ClimbRecordForm(request.POST, request.FILES)
+        
+        if climb_form.is_valid():
+            climb = climb_form.save(commit=False)
+            climb.user = request.user
+            
+            # Convert hr and min to total hours
+            hr = climb_form.cleaned_data.get('time_hr', 0)
+            min = climb_form.cleaned_data.get('time_min', 0)
+            climb.completion_time_hours = (hr or 0) + ((min or 0) / 60.0)
+            
+            climb.save()
+            
+            # Handle photos
+            photos = request.FILES.getlist('photos')
+            for photo_file in photos:
+                Photo.objects.create(record=climb, image=photo_file)
+                
+            # Handle favourite
+            is_favourite = climb_form.cleaned_data.get('is_favourite')
+            if is_favourite == 'yes':
+                UserFavouriteMunro.objects.update_or_create(
+                    user=request.user,
+                    defaults={'munro': climb.munro}
+                )
+                
+            messages.success(request, "Climb added successfully!")
+            return redirect('munro_app:user_profile')
+        else:
+            # If the form is invalid, we don't redirect so we can show errors
+            climb_modal_open = True
+            print("Form errors:", climb_form.errors)
     else:
         user_form = UserEditForm(instance=user)
         profile_form = UserProfileForm(instance=profile)
+        climb_form = ClimbRecordForm()
 
-    #adding in 'add climb' form here for the user modal 
-    climb_form = ClimbRecordForm()
+    # Re-evaluate stats after potential POST save to ensure fresh data is shown if we didn't redirect
+    climbs = ClimbRecord.objects.filter(user=user).order_by('-climb_date', '-created_at')
+    total_climbed = climbs.count()
+    total_distance = climbs.aggregate(Sum('total_distance'))['total_distance__sum'] or 0
+    climbs_list = list(climbs)
+    latest_climb = climbs_list[0] if climbs_list else None
+    previously_hiked = climbs_list[1:] if len(climbs_list) > 1 else []
 
     context = {
         'profile': profile,
@@ -110,9 +159,11 @@ def user_profile(request):
         'total_climbed': total_climbed,
         'total_distance': total_distance,
         'latest_climb': latest_climb,
+        'previously_hiked': previously_hiked,
         'user_form': user_form,
         'profile_form': profile_form,
-        'form': climb_form
+        'form': climb_form,
+        'climb_modal_open': climb_modal_open
     }
     return render(request, 'munro/user_profile.html', context)
 
@@ -162,6 +213,11 @@ def munro_list(request):
         'search_query': search_query,
         'region_filter': region_filter,
     })
+
+@login_required
+def climb_detail(request, climb_id):
+    climb = get_object_or_404(ClimbRecord, id=climb_id, user=request.user)
+    return render(request, 'munro/climb_detail.html', {'climb': climb})
 
 def munro_detail(request, munro_id):
     munro = get_object_or_404(Munro, id=munro_id)

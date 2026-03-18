@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body_class %}profile-background{% endblock %}
+
+{% block content %}
+<div class="mountain-triangles" id="page-content">
+    <div class="base-triangle mtn-left"></div>
+    <div class="base-triangle mtn-middle">
+        <h1 class="page-container">Climb Details</h1>
+    </div>
+    <div class="base-triangle mtn-right"></div>
+</div>
+
+<div class="mountains profile-body">
+    <div class="flex-container" style="justify-content: center;">
+        <div class="box-multiple" style="background-color: #4D86BB; width: 60%; margin-top: 50px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0;">{{ climb.munro.name }}</h2>
+                <a href="{% url 'munro_app:user_profile' %}" class="basic-link" style="color: white !important; font-family: var(--small-font); font-size: 18px; text-decoration: underline;">&larr; Back to Profile</a>
+            </div>
+            
+            <div class="basic-text" style="text-align: left; margin-left: 20px; background-color: var(--blue); padding: 30px; border-radius: 10px;">
+                <p><strong>Date of Climb:</strong> {{ climb.climb_date }}</p>
+                <p><strong>Height Climbed:</strong> {{ climb.total_meters_climbed }} km</p>
+                <p><strong>Distance:</strong> {{ climb.total_distance }} km</p>
+                <p><strong>Time:</strong> {{ climb.completion_time_hours }} hours</p>
+                <p><strong>Rating:</strong> {{ climb.star_rating }} / 5</p>
+                {% if climb.comments %}
+                <p><strong>Climb Notes:</strong> {{ climb.comments }}</p>
+                {% endif %}
+                
+                {% if climb.photos.all %}
+                <div style="margin-top: 20px;">
+                    <p><strong>Photos:</strong></p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        {% for photo in climb.photos.all %}
+                            <img src="{{ photo.image.url }}" alt="Climb photo" style="max-width: 200px; max-height: 200px; border-radius: 5px; object-fit: cover;">
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
