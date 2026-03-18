@@ -14,3 +14,7 @@ munrobag\__pycache__
 
 #env
 .env
+.vscode/media/
+__pycache__/
+*.pyc
+.DS_Store

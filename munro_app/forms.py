@@ -3,8 +3,28 @@ from django.contrib.auth.models import User
 from munro_app.models import UserProfile, ClimbRecord, Munro
 from django.db import models
 
-class MultipleFileInput(forms.ClearableFileInput):
+class MultipleFileInput(forms.FileInput):
     allow_multiple_selected = True
+
+class MultipleFileField(forms.FileField):
+    def to_python(self, data):
+        if not data:
+            return None
+        
+        if not isinstance(data, list):
+            data = [data]
+        
+        result = []
+        for item in data:
+            i = super().to_python(item)
+            if i:
+                result.append(i)
+        return result
+
+    def clean(self, data, initial=None):
+        if not data and self.required:
+            raise forms.ValidationError(self.error_messages['required'])
+        return data
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -39,7 +59,7 @@ class UserEditForm(forms.ModelForm):
 
 class ClimbRecordForm(forms.ModelForm):
     climb_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
-    photos = forms.FileField(widget=MultipleFileInput(attrs={'multiple': True}), required=False)
+    photos = MultipleFileField(widget=MultipleFileInput(attrs={'multiple': True}), required=False)
     
     # Custom fields for time
     time_hr = forms.IntegerField(min_value=0, required=True, label="Total time (hr)")
