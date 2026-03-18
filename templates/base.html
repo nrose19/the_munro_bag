@@ -16,7 +16,7 @@
 
       <!-- CSS loaded -->
       {% load static %}
-      <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+      <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.4">
 
       <!-- favicon website tab logo  -->
        <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
@@ -65,12 +65,11 @@
       <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js">
       </script>
     {% block scripts %}
-    <script src="{% static 'js/main_script.js' %}" defer></script>
+    <script src="{% static 'js/main_script.js' %}?v=1.5" defer></script>
     <script>    
         window.addEventListener('DOMContentLoaded', () => {
-            logoColour();
-            mountainTris();
-            navColour();
+            if (typeof logoColour === 'function') logoColour();
+            if (typeof navColour === 'function') navColour();
         });
     </script>
     {% endblock %}    

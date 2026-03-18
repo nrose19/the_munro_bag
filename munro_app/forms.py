@@ -40,19 +40,28 @@ class UserEditForm(forms.ModelForm):
 class ClimbRecordForm(forms.ModelForm):
     climb_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     photos = forms.FileField(widget=MultipleFileInput(attrs={'multiple': True}), required=False)
-    # star_rating = models.IntegerField(choices=[(1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5')])
+    
+    # Custom fields for time
+    time_hr = forms.IntegerField(min_value=0, required=True, label="Total time (hr)")
+    time_min = forms.IntegerField(min_value=0, max_value=59, required=True, label="Total time (min)")
+    
+    # Custom field for favourite
+    is_favourite = forms.ChoiceField(
+        choices=[('yes', 'yes'), ('no', 'no')],
+        widget=forms.RadioSelect(),
+        required=True,
+        label="Is this your new favourite?"
+    )
 
     star_rating = forms.ChoiceField(
-        choices=[(i,i) for i in range(1,6)],
+        choices=[(5, '5'), (4, '4'), (3, '3'), (2, '2'), (1, '1')],
         widget=forms.RadioSelect()
     )
     
     class Meta:
         model = ClimbRecord
         fields = ('munro', 'climb_date', 'total_meters_climbed', 
-                  'total_distance', 'completion_time_hours', 
-                  'star_rating', 'comments')
+                  'total_distance', 'star_rating', 'comments')
         widgets = {
             'comments': forms.Textarea(attrs={'rows': 3}),
-            # 'star_rating': forms.RadioSelect() \
         }
