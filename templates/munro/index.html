@@ -48,7 +48,7 @@
                 <!-- styling the highest munros -->
                 {% if top_munros %}
                     {% for m in top_munros %}
-                    <div>{{ m.name }}</div>
+                    <div class="top-munro">{{ m.name }}</div>
                     {% endfor %}
                 {% endif %}
             </div>
@@ -56,15 +56,16 @@
                     <div class="box-multiple" style="background-color: #A3CAE1 !important;">
                         <h2>My Latest Climb</h2>
                         {% if latest_climb %}
-                            <div>
-                                <p><strong>Munro:</strong> {{ munro }}</p>
-                                <p><strong>Date of Climb:</strong> {{ climb_date }}</p>
-                                <p><strong>Height Climbed:</strong> {{ total_meters_climbed }} m</p>
-                                <p><strong>Distance:</strong> {{ total_distance }} km</p>
-                                <p><strong>Time:</strong> {{ completion_time_hours }} hours</p>
-                                <p><strong>Rating:</strong> {{ star_rating }}</p>
-                                <p><strong>Climb Notes:</strong> {{ comments }}</p>
-
+                            <div class="basic-text" style="text-align: left; margin-left: 20px;">
+                                <p><strong>Munro:</strong> {{ latest_climb.munro.name }}</p>
+                                <p><strong>Date of Climb:</strong> {{ latest_climb.climb_date }}</p>
+                                <p><strong>Height Climbed:</strong> {{ latest_climb.total_meters_climbed }} km</p>
+                                <p><strong>Distance:</strong> {{ latest_climb.total_distance }} km</p>
+                                <p><strong>Time:</strong> {{ latest_climb.completion_time_hours }} hours</p>
+                                <p><strong>Rating:</strong> {{ latest_climb.star_rating }} / 5</p>
+                                {% if latest_climb.comments %}
+                                <p><strong>Climb Notes:</strong> {{ latest_climb.comments }}</p>
+                                {% endif %}
                             </div>
                         {% else %}
                             <div>

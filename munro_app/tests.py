@@ -67,8 +67,18 @@ class ViewTests(TestCase):
     def test_add_climb_logged_in(self):
         self.client.login(username="tester", password="pass12345")
         m = Munro.objects.create(name="Cairn Gorm", height=1245, location="Aviemore", region="Highlands", difficulty_rating=3, description="Ptarmigan")
-        url = reverse("munro_app:add_climb")
-        res = self.client.post(url, {"munro": m.id, "climb_date": "2024-01-01", "total_meters_climbed": 700, "total_distance": 9, "completion_time_hours": 3, "star_rating": 4})
+        url = reverse("munro_app:user_profile")
+        res = self.client.post(url, {
+            "munro": m.id, 
+            "climb_date": "2024-01-01", 
+            "total_meters_climbed": 700, 
+            "total_distance": 9, 
+            "time_hr": 3,
+            "time_min": 0,
+            "star_rating": 4,
+            "is_favourite": "no",
+            "climb_submit": "1"
+        })
         self.assertEqual(res.status_code, 302)
         self.assertEqual(ClimbRecord.objects.filter(user=self.user, munro=m).count(), 1)
 

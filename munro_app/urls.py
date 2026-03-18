@@ -12,4 +12,5 @@ urlpatterns = [
     path('add_climb/', views.add_climb, name='add_climb'),
     path('munros/', views.munro_list, name='munro_list'),
     path('munros/<int:munro_id>/', views.munro_detail, name='munro_detail'),
+    path('climb/<int:climb_id>/', views.climb_detail, name='climb_detail'),
 ]

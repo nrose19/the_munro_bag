@@ -106,42 +106,175 @@ main {
 .modal{
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 1000; /* Increased z-index significantly */
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 50%;
-    height: auto;
+    width: 60%;
+    max-height: 90vh; /* Limit height to 90% of viewport */
+    overflow-y: auto; /* Enable scrolling if content exceeds height */
     background-color: var(--blue);
     border-radius: 10px;
-      box-shadow: 5px 5px 30px 4px var(--dark-blue), 0px 0px 30px 4px var(--dark-blue)
+    box-shadow: 5px 5px 30px 4px var(--dark-blue), 0px 0px 30px 4px var(--dark-blue);
 }
 
-/* body.modal-open #page-content,
-body.modal-open .mountains {
-    filter: brightness(0.95) blur(3px);
-    transition: filter 0.3s ease;
-} */
-
-
 .climb-content{
+    position: relative; /* Add relative positioning context for close button */
     margin: 0 auto;
-    padding: 40px;
+    padding: 30px 50px;
     width: 100%;
     box-sizing: border-box;
 }
 
+.climb-title {
+    font-size: 26px;
+    font-family: var(--small-font);
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    letter-spacing: 0;
+    margin-bottom: 5px;
+}
+
+.climb-subtitle {
+    font-size: 18px;
+    font-family: var(--small-font);
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    margin-bottom: 30px;
+}
 
 .modal-form{
     margin-top: 15px;
     margin-bottom: 15px;
 }
 
+.custom-form .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.custom-form .form-label {
+    width: 35%;
+    font-family: var(--small-font);
+    font-weight: bold;
+    font-size: 20px;
+    text-align: left;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-form .label-subtext {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.custom-form .form-input-container {
+    width: 65%;
+    display: flex;
+    align-items: center;
+}
+
+.custom-form input[type="text"],
+.custom-form input[type="number"],
+.custom-form select,
+.custom-form input[type="date"] {
+    background-color: #d9d9d9;
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.custom-form .inline-input input {
+    width: 30%;
+    margin-right: 10px;
+}
+
+.custom-form .time-inputs input {
+    width: 25%;
+}
+
+.custom-form .unit {
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 15px;
+}
+
+.custom-form textarea {
+    background-color: #d9d9d9;
+    border: none;
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    resize: none;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.radio-item input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+
+.custom-file-upload {
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: underline;
+    color: var(--dark-blue);
+    cursor: pointer;
+}
+
+.custom-file-upload:hover {
+    color: blue;
+}
+
+.photo-row input[type="file"] {
+    display: none;
+}
+
+.submit-btn {
+    display: block;
+    margin: 30px auto 0;
+    background-color: var(--dark-blue);
+    color: white;
+    border: none;
+    padding: 10px 40px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #1a3355;
+}
+
 .close {
     color: white;
-    float: right;
-    font-size: 25px;
+    position: absolute; /* Changed from float: right */
+    right: 20px;
+    top: 15px;
+    font-size: 35px; /* Increased size for easier clicking */
     font-weight: bold;
+    z-index: 10; /* Ensure it's above other elements */
+    line-height: 1;
 }
 
 .close:hover,
@@ -152,39 +285,45 @@ body.modal-open .mountains {
 }
 
 /* star ratings for add climb modal */
+.star-rating-row .form-input-container {
+    justify-content: flex-start;
+}
+
 .star-rating{
     display: flex;
-    /* flex-direction: row-reverse; */
     justify-content: flex-end;
+    flex-direction: row-reverse; /* Reverse order for CSS selector magic */
     gap: 5px;
 }
 
-.star-rating-box{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
 .star-rating input {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .star-rating label {
-    font-size:  30px;
-    color: white;
+    display: inline-block;
+    font-size: 35px;
+    color: #e0e0e0;
     cursor: pointer;
     transition: color 0.2s ease;
 }
 
+/* Highlight stars when checked */
 .star-rating input:checked ~ label {
-    color: gold;
+    color: #FFD700;
 }
 
+/* Reset checked state when hovering over the group so hover color takes precedence */
+.star-rating:hover input:checked ~ label {
+    color: #e0e0e0;
+}
+
+/* Highlight stars on hover */
 .star-rating label:hover,
 .star-rating label:hover ~ label {
-    color: gold;
+    color: #FFD700 !important;
 }
 
 /* styles for munro page */
@@ -388,20 +527,28 @@ h2 {
     margin-top: 15px;
 }
 
-.climb-txt {
-    text-align: left;
-    font-family: var(--small-font);
+.top-munro {
+    font-family: var(--main-font);
     font-size: 22px;
-    font-weight: bold;
-    color: #000;
-    margin-top: 30px;
+    color: white;
+    text-align: center;
+    margin: 6px 0;
 }
 
 .long-text {
     font-family: var(--small-font);
     font-size: 18px;
-    color: #000;
+    color: #ffffff;
     margin-top: 15px;
+}
+
+.munro-name {
+    font-family: var(--main-font);
+    font-size: 18px;
+    color: #ffffff;
+    line-height: 1.6;
+    margin: 3px 0;
+    text-align: center;
 }
 
 .basic-link{
@@ -512,6 +659,47 @@ h2 {
     text-align: center;
     background-color: var(--dark-blue);
 }
+
+.individual-region {
+    font-family: var(--main-font);
+    color: white;
+    text-align: center;
+    background-color: var(--dark-blue);
+    border-radius: 18px;
+    padding: 20px 15px 25px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease;
+}
+
+.munro-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-family: var(--main-font);
+    color: white;
+    margin: 4px 0;
+}
+.munro-left {
+    white-space: nowrap;
+}
+.munro-dots {
+    flex: 1;
+    border-bottom: 2px dotted rgba(255, 255, 255, 0.6);
+    margin: 0 8px;
+}
+.munro-right {
+    white-space: nowrap;
+}
+
+/* makes it move */
+.individual-region:hover {
+    transform: translateY(-5px);
+}
+
+
+
+
+
 
 
 

@@ -5,20 +5,27 @@
 // }
 
 //hide menu icon once clicked
-document.getElementById("menuToggle").addEventListener("click", function (e) {
-    e.preventDefault();
+const menuToggleBtn = document.getElementById("menuToggle");
+if (menuToggleBtn) {
+    menuToggleBtn.addEventListener("click", function (e) {
+        e.preventDefault();
 
-    const menu = document.getElementById("menuLinks");
-    const icon = document.getElementById("menuToggle svg");
+        const menu = document.getElementById("menuLinks");
+        const icon = document.querySelector("#menuToggle svg");
 
-    menu.classList.toggle("open");
+        if (menu) {
+            menu.classList.toggle("open");
 
-    if (menu.classList.contains("open")) {
-        icon.classList.add("hidden");
-    } else {
-        icon.classList.remove("hidden");
-    }
-});
+            if (icon) {
+                if (menu.classList.contains("open")) {
+                    icon.classList.add("hidden");
+                } else {
+                    icon.classList.remove("hidden");
+                }
+            }
+        }
+    });
+}
 
 
 //logo colour to change when not on homepage
@@ -52,54 +59,75 @@ function navColour(){
 }
 
 
-//add climb modal information
-var modal = document.getElementById("addClimb");
-var navModal = document.getElementById("menuLinks");
-var btn = document.getElementById("modalBtn");
-var nvBtn = document.getElementById("menuToggle")
-var span = document.getElementsByClassName("close");
-
-btn.onclick = function(){
-    modal.style.display = "block";
-}
-
-nvBtn.onclick = function(){
-    navModal.style.display = "block";
-}
-
-for (let i=0; i < span.length; i++) {
-    span[i].onclick = function(){
-        modal.style.display = 'none';
-        navModal.style.display = 'none';
-    }
-}
-
-window.onclick = function(event){
-    if (event.target == modal){
-        modal.style.display = 'none';
-    }
-}
-
-//mountain triangles to change when not on profile page
-// function mountainTris(){
-//     const triangle = document.querySelector('.base-triangle');
-//     const background = document.querySelector('.mountains');
-//     const isProfile = window.location.pathname === '/profile/' || window.location.pathname === '/profile';
-
-//     triangle.forEach(tri => {
-//         tri.style.borderBottomColor = isProfile ? '#A3CAE1' : '#4D86BB';
-//     });
-
-//     if(background && isProfile){
-//         background.style.backgroundColor = '#A3CAE1'
-//     } else {
-//         background.style.backgroundColor = '#4D86BB'
-//     }
-// }
-
-
 window.addEventListener('DOMContentLoaded', () => {
     logoColour();
-    mountainTris();
+    // mountainTris();
     navColour();
+        
+
+
+    //add climb modal information
+    var modal = document.getElementById("addClimb");
+    var navModal = document.getElementById("menuLinks");
+    var btn = document.getElementById("modalBtn");
+    var nvBtn = document.getElementById("menuToggle");
+
+    // Fix: Add Climb modal close button might not be the very first .close element on the page
+    var climbModalCloseBtns = document.querySelectorAll("#addClimb .close");
+    var navModalCloseBtn = document.querySelector("#menuLinks .close");
+
+    if (btn) {
+        btn.onclick = function(e){
+            e.preventDefault();
+            modal.style.display = "block";
+            document.body.classList.add("modal-open");
+        }
+    }
+
+    if (nvBtn) {
+        nvBtn.onclick = function(){
+            navModal.style.display = "block";
+        }
+    }
+
+    if (climbModalCloseBtns.length > 0) {
+        climbModalCloseBtns.forEach(function(closeBtn) {
+            closeBtn.onclick = function(e){
+                e.preventDefault();
+                modal.style.display = 'none';
+                document.body.classList.remove("modal-open");
+            }
+        });
+    }
+
+    // display chosen file name
+    const actualBtn = document.querySelector('.photo-row input[type="file"]');
+    const fileChosen = document.getElementById('file-chosen');
+
+    if (actualBtn && fileChosen) {
+        actualBtn.addEventListener('change', function(){
+            if (this.files && this.files.length > 0) {
+                if (this.files.length === 1) {
+                    fileChosen.textContent = this.files[0].name;
+                } else {
+                    fileChosen.textContent = this.files.length + ' files chosen';
+                }
+            } else {
+                fileChosen.textContent = 'No file chosen';
+            }
+        });
+    }
+
+    if (navModalCloseBtn) {
+        navModalCloseBtn.onclick = function(){
+            navModal.style.display = 'none';
+        }
+    }
+
+    window.onclick = function(event){
+        if (event.target == modal){
+            modal.style.display = 'none';
+            document.body.classList.remove("modal-open");
+        }
+    }
 });
