@@ -12,3 +12,4 @@ __pycache__/
 .vscode/media/
 __pycache__/
 *.pyc
+.DS_Store
