@@ -45,11 +45,16 @@
             <ul>
                 {% regroup munros by region as region_list %}
                 {% for region in region_list %}
+                <!-- styling the munros list -->
                     <li class="individual-region">
                         <h2>{{ region.grouper }}</h2>
                         <div class="long-text">
                             {% for m in region.list %}
-                                {{ m.name }}<br>
+                                <div class="munro-row">
+                                    <span class="munro-left">{{ m.name }}</span>
+                                    <span class="munro-dots"></span>
+                                    <span class="munro-right">{{ m.height }} m</span>
+                                </div>
                             {% endfor %}
                         </div>
                     </li>
