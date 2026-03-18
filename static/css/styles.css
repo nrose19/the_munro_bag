@@ -113,7 +113,6 @@ main {
     transform: translate(-50%, -50%);
     width: 60%;
     max-height: 75vh; /* Limit height to 90% of viewport */
-    overflow-y: auto; /* Enable scrolling if content exceeds height */
     background-color: var(--blue);
     border-radius: 10px;
     box-shadow: 5px 5px 30px 4px var(--dark-blue), 0px 0px 30px 4px var(--dark-blue);
