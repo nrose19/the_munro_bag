@@ -52,4 +52,4 @@ wcwidth==0.6.0
 whitenoise==6.12.0
 
 python-dotenv
-django-registration
+django-registration==2.4.1
