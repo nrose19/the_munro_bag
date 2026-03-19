@@ -18,14 +18,17 @@ def index(request):
             latest_climb_photos = latest_climb.photos.all()
 
     search_query = request.GET.get('search', '')
-    if search_query:
-        # Simple search for now, could redirect to list view
-        return redirect(f'/munros/?search={search_query}')
+    region_filter = request.GET.get('region', '')
+    if search_query or region_filter:
+        return redirect(f'/munros/?search={search_query}&region={region_filter}')
+
+    regions = Munro.objects.values_list('region', flat=True).distinct().order_by('region')
 
     context = {
         'top_munros': top_munros,
         'latest_climb': latest_climb,
         'latest_climb_photos': latest_climb_photos,
+        'regions': regions,
     }
 
     print(top_munros)
@@ -88,7 +91,18 @@ def user_profile(request):
     # Stats
     # Order by climb_date descending, then by created_at descending to ensure the most recently added records appear first
     climbs = ClimbRecord.objects.filter(user=user).order_by('-climb_date', '-created_at')
+    
+    # Use total count of climbs instead of unique munros, as per user request
     total_climbed = climbs.count()
+    # Calculate progress percentage based on unique munros for accuracy, or total climbs?
+    # User said "don't change business logic" and "completed 8" (which is the total count).
+    # So we display total_climbed as 8.
+    # For the progress bar, if we use total_climbed, it might exceed 100% if they climb > 282 times.
+    # But for now, let's stick to total_climbed for consistency with the displayed number.
+    progress_percentage = (total_climbed / 282) * 100 if total_climbed > 0 else 0
+    if progress_percentage > 100:
+        progress_percentage = 100
+    
     total_distance = climbs.aggregate(Sum('total_distance'))['total_distance__sum'] or 0
     
     # We must evaluate the queryset to a list to properly slice it and avoid issues with re-evaluating querysets after changes
@@ -158,6 +172,10 @@ def user_profile(request):
     # Re-evaluate stats after potential POST save to ensure fresh data is shown if we didn't redirect
     climbs = ClimbRecord.objects.filter(user=user).order_by('-climb_date', '-created_at')
     total_climbed = climbs.count()
+    progress_percentage = (total_climbed / 282) * 100 if total_climbed > 0 else 0
+    if progress_percentage > 100:
+        progress_percentage = 100
+    
     total_distance = climbs.aggregate(Sum('total_distance'))['total_distance__sum'] or 0
     climbs_list = list(climbs)
     latest_climb = climbs_list[0] if climbs_list else None
@@ -173,6 +191,7 @@ def user_profile(request):
         'profile': profile,
         'climbs': climbs,
         'total_climbed': total_climbed,
+        'progress_percentage': progress_percentage,
         'total_distance': total_distance,
         'fav_munro': fav_munro,
         'latest_climb': latest_climb,

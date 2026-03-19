@@ -13,16 +13,16 @@
         <div class="base-triangle mtn-right"></div>
     </div>
     <div class="mountains profile-body">
-        <!-- <div class="edit-profile">
-           <button class="edit-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                    <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
-                    <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+        
+        <!-- Add Climb Button - Moved to top right -->
+        <div style="display: flex; justify-content: flex-end; padding-right: 200px; margin-bottom: 20px;">
+            <button id="modalBtn" class="climb-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                 </svg>
-                <p style="margin-left: 5px;">edit profile</p>
+                Add New Climb
             </button>
-            
-        </div> -->
+        </div>
 
             <!-- Add Climb Modal  -->
              <div id="addClimb" class="modal" {% if climb_modal_open %}style="display: block;"{% endif %}>
@@ -61,7 +61,6 @@
                         <div class="form-row">
                             <label class="form-label">
                                 Climb date:
-                                <span class="label-subtext">format: day/month/year</span>
                             </label>
                             <div class="form-input-container">
                                 {{ form.climb_date }}
@@ -70,9 +69,9 @@
 
                         <!-- Total meters climbed -->
                         <div class="form-row">
-                            <label class="form-label">Total meters climbed:</label>
+                            <label class="form-label">Height climbed:</label>
                             <div class="form-input-container inline-input">
-                                {{ form.total_meters_climbed }} <span class="unit">m</span>
+                                {{ form.total_meters_climbed }} <span class="unit">km</span>
                             </div>
                         </div>
 
@@ -134,71 +133,78 @@
                                 Upload images
                             </label>
                             {{ form.photos }}
-                            <span id="file-chosen" style="margin-left: 15px; font-family: var(--small-font); font-size: 16px; color: #333;">No file chosen</span>
+                            <span id="file-chosen" style="margin-left: 15px; font-family: var(--small-font); font-size: 16px; color: #ffffff;">No file chosen</span>
                         </div>
 
                     <button type="submit" class="climb-btn submit-btn">Submit</button>
                     </form>
                 </div>
              </div>
+
+             <!-- Main Content -->
                 <div style="display: flex; flex-direction: column; gap: 20px; padding-left: 200px; padding-right: 200px;">
                         
-                        <!-- climb button - activates modal for add climb form -->
-                        <div class='add-climb' style="display: flex; justify-content: flex-end;">
-                            <button id="modalBtn" class="climb-btn">Add New Climb</button>
-                        </div>
-
-                        <!-- User stat box -->
-                        <div style="display: flex; flex-direction: row; gap: 45px;">
+                        <!-- User stat box and Latest Climb -->
+                        <div style="display: flex; flex-direction: row; gap: 45px; align-items: stretch;">
                             
-                            <div class="profile-info" style="background-color: #4D86BB; flex: 1;">
-                                <h2>Welcome back {{ user.username }}!</h2>
-                                <div class="basic-text" style="text-align: left !important; padding-top: 10px;">
-                                    <p style="text-align: center !important; font-size: 25px;">Find your Munro stats below:</p>
-                                    <div style="padding-top: 10px;"> 
-                                        <p><u>Total Munros climbed:</u> {{ total_climbed }}</p>
-                                        <p><u>Total distance hiked:</u> {{ total_distance }} km</p>
-                                        <p><u>Favourite munro:</u> 
-                                            {% if fav_munro %}
-                                                {{ fav_munro.name }}
-                                            {% else %} 
-                                                You don't have a favourite yet. Keep climbing!
-                                            {% endif %}
-                                        </p>
-                                    </div> 
-                                </div>
+                            <div class="profile-info glass-box" style="flex: 1; min-width: 350px; margin: 0; display: flex; flex-direction: column;">
+                                <h2 style="margin-bottom: 25px; text-align: center;">Welcome back, {{ user.username }}!</h2>
+                                <div class="basic-text" style="text-align: left; padding: 0 10px; flex-grow: 1;">
+                                    <p style="text-align: center; font-size: 20px; margin-bottom: 30px; opacity: 0.9;">Here is your Munro progress:</p>
+                                    
+                                    <div style="margin-bottom: 30px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px;">
+                                            <strong>Munros Bagged</strong>
+                                            <span style="font-size: 24px; font-weight: 700; color: #ffffff;">{{ total_climbed }} <span style="font-size: 16px; font-weight: 400; opacity: 0.7;">/ 282</span></span>
+                                        </div>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: {{ progress_percentage }}%;"></div>
+                                        </div>
+                                    </div>
+                                    <p><strong>Total Distance:</strong> <span class="stat-number">{{ total_distance }}</span> km</p>
+                                    <p><strong>Favourite Munro:</strong> 
+                                        {% if fav_munro %}
+                                            {{ fav_munro.name }}
+                                        {% else %} 
+                                            You don't have a favourite yet. Keep climbing!
+                                        {% endif %}
+                                    </p>
+                                </div> 
                             </div>
+
                             <!-- Latest climb box -->
-                            <div class="box-multiple" style="background-color: #4D86BB; flex: 1;">
-                                <h2>My Latest Climb</h2>
+                            <div class="box-multiple glass-box" style="flex: 1; min-width: 350px; margin: 0; display: flex; flex-direction: column;">
+                                <h2 style="margin-bottom: 25px; text-align: center;">My Latest Climb</h2>
                                 {% if latest_climb %}
                                     <div class="flex-container">
-                                        <div class="basic-text" style="text-align: left; margin-left: 20px;">
-                                            <p><u>Munro:</u> {{ latest_climb.munro.name }}</p>
-                                            <p><u>Date of Climb:</u> {{ latest_climb.climb_date }}</p>
-                                            <p><u>Height Climbed:</u> {{ latest_climb.total_meters_climbed }} km</p>
-                                            <p><u>Distance:</u> {{ latest_climb.total_distance }} km</p>
-                                            <p><u>Time:</u> {{ latest_climb.completion_time_hours }} hours</p>
-                                            <p><u>Rating:</u> {{ latest_climb.star_rating }} / 5</p>
+                                        <div class="basic-text" style="text-align: left; margin-left: 20px; flex: 1;">
+                                            <p><strong>Munro:</strong> {{ latest_climb.munro.name }}</p>
+                                    <p style="white-space: nowrap;"><strong>Date of Climb:</strong> {{ latest_climb.climb_date }}</p>
+                                    <p><strong>Height Climbed:</strong> {{ latest_climb.total_meters_climbed }} km</p>
+                                            <p><strong>Distance:</strong> {{ latest_climb.total_distance }} km</p>
+                                            <p><strong>Time:</strong> {{ latest_climb.formatted_time }}</p>
+                                            <p><strong>Rating:</strong> {{ latest_climb.star_rating }} / 5</p>
                                         </div>
-                                        {% if latest_climb.photos %}
-                                        <div class="display-photo" style="display: flex; flex-direction: column;">
-                                            {% for photo in latest_climb.photos.all %}
-                                                <img src="{{ photo.image.url }}"
-                                                alt="Photo from {{ latest_climb.munro.name }}"
-                                                class="carousel-photo climb-img {% if not forloop.first %}carousel-hidden{% endif %}"
-                                                data-index="{{ forloop.counter0 }}"
-                                                >
+                                        {% with photos=latest_climb.photos.all %}
+                                {% if photos %}
+                                <div class="display-photo" style="display: flex; flex-direction: column; flex: 1; margin-top: 60px;">
+                                    {% for photo in photos %}
+                                                <div class="image-frame card-img-container">
+                                                    <img src="{{ photo.image.url }}"
+                                                    alt="Photo from {{ latest_climb.munro.name }}"
+                                                    class="climb-img"
+                                                    >
+                                                </div>
                                             {% endfor %}
-                                            <div style="display: flex; flex-direction: row;">
-                                               <button onclick="changePhoto(-1)" class="edit-btn">← Prev</button>
-                                                <button onclick="changePhoto(1)" class="edit-btn">Next →</button> 
-                                            </div>
                                         </div>
-                                        {% endif %}
+                                    {% endif %}
+                                        {% endwith %}
                                     </div>
                                     {% if latest_climb.comments %}
-                                    <p class="long-text" style="color: black !important; text-align: left; margin-left: 20px;"><u class="basic-text">Climb Notes:</u> {{ latest_climb.comments }}</p>
+                                    <div style="text-align: left; margin-left: 20px; margin-top: 15px;">
+                                        <p style="margin-bottom: 5px;"><strong>Notes:</strong></p>
+                                        <p class="long-text" style="margin-top: 0;">{{ latest_climb.comments }}</p>
+                                    </div>
                                     {% endif %}
                                 {% else %}
                                     <div>
@@ -210,25 +216,30 @@
                         </div>
 
                         <!-- previously hiked box -->
-                        <div class="box-multiple" style="background-color: #4D86BB; width: 100%;">
-                            <h2>Previously hiked...</h2>
+                        <div class="box-multiple glass-box" style="width: 100%;">
+                            <h2 style="margin-bottom: 20px;">Climb History</h2>
                             <div>
                                 <p class="basic-text">You have completed {{ total_climbed }}/282 munros</p>
                             </div>
                             {% if climbs %}
-                                <ul style="list-style-type: none; padding-left: 0; margin-top: 20px;">
+                                <ul class="climb-list-scroll" style="list-style-type: none; padding-left: 0; margin-top: 10px;">
                                     {% for c in climbs %}
-                                    <li style="margin-bottom: 10px; background-color: var(--blue); padding: 10px; border-radius: 5px;">
-                                        <a href="{% url 'munro_app:climb_detail' c.id %}" style="color: white; text-decoration: none; font-family: var(--small-font); font-size: 18px; display: flex; justify-content: space-between;">
-                                            <span><strong>{{ c.munro.name }}</strong></span>
-                                            <span>{{ c.climb_date }}</span>
+                                    <li class="climb-list-item">
+                                        <a href="{% url 'munro_app:climb_detail' c.id %}" class="climb-list-link">
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16" style="opacity: 0.8;">
+                                                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                                                </svg>
+                                                <span style="font-weight: 600;">{{ c.munro.name }}</span>
+                                            </div>
+                                            <span style="opacity: 0.8; font-size: 14px;">{{ c.climb_date }}</span>
                                         </a>
                                     </li>
                                     {% endfor %}
                                 </ul>
                             {% else %}
                                 <div>
-                                    <p class="basic-text" style="color: white;">No previous climbs recorded yet.</p>
+                                    <p class="basic-text">No previous climbs recorded yet.</p>
                                 </div>
                             {% endif %}
                         </div>
@@ -236,4 +247,3 @@
                     </div>
                 </div>
 {% endblock %}
-      
