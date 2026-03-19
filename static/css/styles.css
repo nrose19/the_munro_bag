@@ -1,9 +1,9 @@
 :root{
-    --dark-blue: #234473;
-    --medium-blue: #4D86BB; 
-    --blue: #7AACD3;
-    --light-blue: #A3CAE1;
-    --transparent-blue: rgba(163, 202, 225, 0.6);
+    --dark-blue: #1A365D;
+    --medium-blue: #2C5282; 
+    --blue: #4277A8;
+    --light-blue: #5C95C6;
+    --transparent-blue: rgba(92, 149, 198, 0.6);
     --main-font: 'Calistoga', serif;
     --small-font: "Caladea", serif;
 }
@@ -18,7 +18,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 850px;
+    height: 600px;
 }
 
 .center-text {
@@ -32,7 +32,157 @@ main {
 .search {
     display: flex;
     justify-content: center;
-    padding-top: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.search form {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search input[type="text"],
+.search select {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: white;
+    font-family: var(--small-font);
+    font-size: 16px;
+    color: var(--dark-blue);
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    height: 46px;
+}
+
+.search input[type="text"] {
+    width: 250px;
+}
+
+.search select {
+    width: 200px;
+    cursor: pointer;
+}
+
+.search input[type="text"]:focus,
+.search select:focus {
+    border-color: var(--dark-blue);
+    box-shadow: 0 0 0 3px rgba(122, 172, 211, 0.5);
+}
+
+.search-btn {
+    background-color: var(--dark-blue);
+    color: white;
+    border: none;
+    padding: 0 35px; /* Adjust padding since height is fixed */
+    border-radius: 8px;
+    font-family: var(--small-font);
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn:hover {
+    background-color: var(--medium-blue);
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--medium-blue);
+    color: white !important;
+    font-family: var(--small-font);
+    font-weight: bold;
+    border: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.btn-primary:hover {
+    background-color: var(--blue);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    color: white !important;
+}
+
+.btn-primary:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: white !important;
+    font-family: var(--small-font);
+    font-weight: bold;
+    border: 2px solid white;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    color: white !important;
+}
+
+.btn-outline:active {
+    transform: scale(0.95);
+}
+
+.clear-btn {
+    color: white;
+    font-family: var(--small-font);
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none !important;
+    padding: 11px 25px;
+    border: 1px solid white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 46px; /* matching input height (12px padding * 2 + ~22px text = ~46px) */
+}
+
+.clear-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Empty state styles */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    margin: 40px auto;
+    max-width: 600px;
+    backdrop-filter: blur(5px);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+/* Add margin to results container to push it down from search bar */
+.munro-results-container {
+    margin-top: 40px;
 }
 
 /* pages h1 container */
@@ -40,8 +190,11 @@ main {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    height: 350px;
+    height: 250px; /* Increased from 200px to push text down further and avoid being cut off */
     white-space: nowrap;
+    padding-bottom: 20px; /* Increased from 10px */
+    position: relative; /* Add position relative */
+    z-index: 2; /* Ensure it stays above other elements */
 }
 
 
@@ -51,10 +204,68 @@ main {
     background-image: none !important;
 }
 
-.profile-info {
-    padding: 2%;
-    padding-top: 40px;
-    margin-bottom: 50px;
+/* Unified Card Style for Profile */
+.profile-info, .box-multiple {
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 32px;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    flex: 1;
+    color: white;
+}
+
+.profile-info h2, .profile-info p, .profile-info strong, .profile-info span,
+.box-multiple h2, .box-multiple p, .box-multiple strong {
+    color: white !important;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.about-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 40px;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background-color: #f8f9fa;
+    text-align: left;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.about-card h2 {
+    color: #333 !important;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    letter-spacing: normal;
+    text-align: left;
+}
+
+.about-card p {
+    color: #555 !important;
+    font-family: var(--small-font);
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.about-card .long-text {
+    color: #333 !important;
+}
+
+.about-card strong {
+    color: #333 !important;
 }
 
 .profile-body{
@@ -73,35 +284,156 @@ main {
 .edit-btn{
     display: flex;
     flex-direction: row;
-    align-items: baseline;
+    align-items: center;
+    justify-content: center;
     background-color: transparent;
     border-color: transparent;
+    padding: 5px 15px;
+    font-family: var(--small-font);
+    transition: all 0.3s ease;
+    margin: 0 5px;
 }
 
-.edit-btn:hover {
-    cursor: pointer;
+/* Profile Page Improvements */
+.progress-container {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    margin-top: 10px;
+    height: 8px;
+    overflow: hidden;
 }
 
-.add-climb {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+    border-radius: 8px;
+    transition: width 1s ease-in-out;
 }
+
+.climb-list-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+
 
 .climb-btn {
-    background-color: var(--dark-blue);
+    background-color: var(--medium-blue);
     color: white;
     font-family: var(--small-font);
     font-size: 20px;
-    border-color: var(--dark-blue);
-    border-radius: 10px;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 32px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .climb-btn:hover {
-    background-color: var(--medium-blue);
-    cursor: pointer;
-    border-color: var(--medium-blue);
+    background-color: var(--blue);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
 }
+
+/* Detail Page Improvements */
+.detail-card-notes {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #6aa9ff;
+    padding: 16px 24px;
+    border-radius: 8px;
+    margin-top: 24px;
+}
+
+.detail-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.detail-text-primary {
+    color: #ffffff;
+    opacity: 0.95;
+}
+
+.detail-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+/* Global Image Frame Style */
+.image-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    display: inline-block; /* Ensure container wraps content properly */
+    width: 100%; /* Default width */
+    box-sizing: border-box;
+}
+
+.image-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    filter: brightness(0.95) saturate(0.9) contrast(0.95);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.image-frame::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border-radius: 14px;
+    background: rgba(90, 130, 190, 0.16);
+    pointer-events: none;
+}
+
+.image-frame:hover img {
+    transform: scale(1.02);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+/* specific image sizing rules based on context */
+.card-img-container {
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 4 / 3;
+    margin: 0 auto;
+}
+
+.detail-img-container {
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 4 / 3;
+    margin: 0 auto;
+}
+
+.preview-img-container {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+}
+
+.preview-img-container img {
+    object-fit: cover;
+}
+
+
 
 /* Add Climb Modal */
 .modal{
@@ -130,7 +462,7 @@ main {
     font-size: 26px;
     font-family: var(--small-font);
     font-weight: bold;
-    color: #000;
+    color: #ffffff;
     text-align: center;
     letter-spacing: 0;
     margin-bottom: 5px;
@@ -140,7 +472,7 @@ main {
     font-size: 18px;
     font-family: var(--small-font);
     font-weight: bold;
-    color: #000;
+    color: #f8f9fa;
     text-align: center;
     margin-bottom: 30px;
 }
@@ -162,7 +494,7 @@ main {
     font-weight: bold;
     font-size: 20px;
     text-align: left;
-    color: #000;
+    color: #ffffff;
     display: flex;
     flex-direction: column;
 }
@@ -183,11 +515,25 @@ main {
 .custom-form select,
 .custom-form input[type="date"] {
     background-color: #d9d9d9;
-    border: none;
-    padding: 5px 10px;
+    color: #333;
+    border: 1px solid transparent; /* Prepare for focus state */
+    padding: 8px 12px; /* Slightly increased padding */
     font-size: 16px;
     width: 100%;
     box-sizing: border-box;
+    border-radius: 8px; /* Added border-radius */
+    transition: all 0.3s ease;
+}
+
+.custom-form input[type="text"]:focus,
+.custom-form input[type="number"]:focus,
+.custom-form select:focus,
+.custom-form input[type="date"]:focus,
+.custom-form textarea:focus {
+    background-color: #fff;
+    border-color: var(--dark-blue);
+    outline: none;
+    box-shadow: 0 0 5px rgba(35, 68, 115, 0.3);
 }
 
 .custom-form .inline-input input {
@@ -207,11 +553,14 @@ main {
 
 .custom-form textarea {
     background-color: #d9d9d9;
-    border: none;
+    color: #333;
+    border: 1px solid transparent;
     width: 100%;
     height: 100px;
     padding: 10px;
     resize: none;
+    border-radius: 8px; /* Added border-radius */
+    transition: all 0.3s ease;
 }
 
 .radio-group {
@@ -225,6 +574,7 @@ main {
     gap: 5px;
     font-weight: bold;
     font-size: 18px;
+    color: #ffffff;
 }
 
 .radio-item input[type="radio"] {
@@ -235,14 +585,23 @@ main {
 
 .custom-file-upload {
     font-weight: bold;
-    font-size: 18px;
-    text-decoration: underline;
-    color: var(--dark-blue);
+    font-size: 16px;
+    color: white;
+    background-color: var(--dark-blue);
+    padding: 8px 20px;
+    border-radius: 20px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .custom-file-upload:hover {
-    color: blue;
+    background-color: var(--medium-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    color: white;
 }
 
 .photo-row input[type="file"] {
@@ -263,7 +622,7 @@ main {
 }
 
 .submit-btn:hover {
-    background-color: #1a3355;
+    background-color: var(--medium-blue);
 }
 
 .close {
@@ -334,15 +693,32 @@ main {
 
 
 /* further styles for registration pages */
-.register_main {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    background: var(--transparent-blue);
-    color: #000;
-    font-family: var(--main-font);
-    font-weight: bold;
-    margin: 60px;
+.auth-form input[type="text"],
+.auth-form input[type="password"],
+.auth-form input[type="email"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+    font-family: var(--small-font);
+    font-size: 16px;
+    color: var(--dark-blue);
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.auth-form input[type="text"]:focus,
+.auth-form input[type="password"]:focus,
+.auth-form input[type="email"]:focus {
+    outline: none;
+    border-color: var(--medium-blue);
+    box-shadow: 0 0 0 3px rgba(77, 134, 187, 0.2);
+    background-color: #ffffff;
+}
+
+.auth-form input::placeholder {
+    color: #999;
 }
 
 .btn-style{
@@ -388,8 +764,9 @@ h1 {
 
 /* h1 styling for homepage */
 .h1-homepage {
-    font-size: 100px;
+    font-size: 70px;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
 
@@ -417,18 +794,44 @@ h2 {
 }
 /* adjust the padding for the boxes */
 .box-munros {
-    background-color: var(--blue);
-    padding: 5%;
-    padding-top: 50px;
+    padding: 30px;
+    padding-top: 30px;
+    border-radius: 15px;
 }
 
 .box-multiple {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    padding: 2%;
+    padding: 30px;
     margin-top: 0;
     margin-bottom: 50px;
+    border-radius: 15px;
+}
+
+/* Glassmorphism box style for main cards */
+.glass-box {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 24px;
+}
+
+.glass-box:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3) !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.glass-box h2, .glass-box strong {
+    color: #ffffff !important;
+}
+
+.glass-box p, .glass-box .basic-text {
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* styling for latest climb photos */
@@ -443,8 +846,8 @@ h2 {
 }
 
 .climb-img{
-    max-width: 260px;
-    max-height: 260px;
+    width: 100%;
+    max-height: 300px;
     object-fit: cover;
     border-radius: 8px;
 }
@@ -550,17 +953,24 @@ h2 {
     font-family: var(--small-font);
     font-size: 20px;
     font-weight: bold;
-    color: #000;
+    color: #ffffff;
     margin-top: 15px;
 }
 
 .top-munro {
     display: flex;
-    font-family: var(--main-font);
-    font-size: 22px;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    font-family: var(--small-font);
+    font-size: 18px;
     color: white;
-    text-align: center;
-    margin: 6px 0;
+    margin: 5px 0;
+}
+
+.top-munro:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
 }
 
 .long-text {
@@ -579,13 +989,52 @@ h2 {
     text-align: center;
 }
 
+/* Latest Climb styles */
+.climb-stat {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 12px;
+    font-family: var(--small-font);
+    font-size: 18px;
+}
+
+.stat-label {
+    color: rgba(255, 255, 255, 0.8);
+    margin-right: 10px;
+    min-width: 130px;
+}
+
+.stat-value {
+    color: white;
+    font-weight: bold;
+}
+
+.climb-notes-bubble {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin: 20px 20px 10px 20px;
+    text-align: left;
+    border-left: 4px solid var(--blue);
+}
+
+.climb-img-wide {
+    width: 100%;
+    max-height: 250px;
+    object-fit: contain; /* Changed from cover to contain to show full image */
+    border-radius: 12px;
+    margin-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.1); /* Optional: add a subtle background for images that don't fill the space */
+}
+
 .basic-link{
-    color: var(--dark-blue) !important;
+    color: #FFD700 !important;
     font-weight: bold;
 }
 
 .basic-link:hover{
-    color: blue !important;
+    color: #FFA500 !important;
 }
 
 .login-link{
@@ -601,21 +1050,58 @@ h2 {
 }
 
 .login-text:hover{
-    color: var(--medium-blue);
+    color: var(--light-blue);
+}
+
+.login-link-highlight:hover {
+    text-decoration: underline !important;
+    opacity: 0.8;
+}
+
+.climb-list-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.climb-list-item {
+    margin-bottom: 10px;
+}
+
+.climb-list-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: transparent;
+    border-radius: 12px;
+    color: white;
+    text-decoration: none;
+    font-family: var(--small-font);
+    font-size: 18px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.climb-list-link:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    transform: translateX(4px);
+    color: white;
+    text-decoration: none;
 }
 
 /* triangles for profile/munro page */
 .mountains{
     background-color: var(--light-blue);
     min-height: 100vh;
-    padding-top: 100px;
+    padding-top: 20px; /* Reduced from 100px */
 }
 .mountain-triangles{
     display: flex;
     align-items: flex-end;
     justify-content: center;
     position: relative;
-    height: 320px;
+    height: 220px; /* Increased from 180px */
     z-index: -1; /*pushes behind content */
 }
 
@@ -629,19 +1115,19 @@ h2 {
 
 .mtn-left{
     margin-right: -40px;
-    border-bottom: 250px solid var(--light-blue);
+    border-bottom: 180px solid var(--light-blue);
 }
 
 .mtn-middle{
     border-left: 420px solid transparent !important;
     border-right: 420px solid transparent !important;
-    border-bottom: 360px solid var(--light-blue);
+    border-bottom: 290px solid var(--light-blue);
     z-index: 0;
 }
 
 .mtn-right{
     margin-left: -40px;
-    border-bottom: 250px solid var(--light-blue);
+    border-bottom: 180px solid var(--light-blue);
 }
 
 /* for Munro's page */
@@ -681,14 +1167,6 @@ h2 {
     margin: 10px;
 }
 
-.individual-region{
-    font-family: var(--main-font);
-    font-size: 40px;
-    color: white;
-    text-align: center;
-    background-color: var(--dark-blue);
-}
-
 .individual-region {
     font-family: var(--main-font);
     color: white;
@@ -698,26 +1176,112 @@ h2 {
     padding: 20px 15px 25px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.25);
     transition: transform 0.2s ease;
+    height: 500px; /* Fixed height */
+    display: flex;
+    flex-direction: column;
+}
+
+.individual-region h2 {
+    margin-bottom: 15px;
+    font-size: 35px;
+    flex-shrink: 0;
+}
+
+.individual-region .long-text {
+    overflow-y: auto; /* Enable vertical scrolling */
+    flex-grow: 1;
+    padding-right: 10px; /* Space for scrollbar */
+    margin-top: 0;
+    text-align: left;
+}
+
+/* Custom Scrollbar for region boxes */
+.individual-region .long-text::-webkit-scrollbar {
+    width: 6px;
+}
+
+.individual-region .long-text::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.individual-region .long-text::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+}
+
+.individual-region .long-text::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.6);
 }
 
 .munro-row {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    align-items: baseline;
     width: 100%;
     font-family: var(--main-font);
     color: white;
     margin: 4px 0;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.munro-row:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.climb-list-scroll {
+    max-height: 600px; /* Approximately 10 items */
+    overflow-y: auto;
+    padding-right: 10px; /* Space for scrollbar */
+}
+
+/* Custom Scrollbar for climb list */
+.climb-list-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.climb-list-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.climb-list-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+}
+
+.climb-list-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    margin-top: 5px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #FFD700, #FFB400);
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
 }
 .munro-left {
-    white-space: nowrap;
-}
-.munro-dots {
-    flex: 1;
-    border-bottom: 2px dotted rgba(255, 255, 255, 0.6);
-    margin: 0 8px;
+    white-space: normal;
+    word-wrap: break-word;
+    flex: 0 1 auto;
 }
 .munro-right {
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .climbed-munro{

@@ -130,15 +130,17 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
-    //latest climb photos
-    let currentPhoto = 0;
-    const photos = document.querySelectorAll('.carousel-photo');
-
-    function changePhoto(direction){
-        photos[currentPhoto].style.display = 'none';
-        currentPhoto = (currentPhoto + direction + photos.length) % photos.length;
-        photos[currentPhoto].style.display = 'block';
-    }
-
 });
+
+// Toggle About Munros section
+function toggleAbout() {
+    var details = document.getElementById('about-details');
+    var btn = document.getElementById('about-toggle-btn');
+    if (details.style.display === 'none') {
+        details.style.display = 'block';
+        btn.innerHTML = '&uarr; Show less';
+    } else {
+        details.style.display = 'none';
+        btn.innerHTML = '&rarr; Learn more';
+    }
+}

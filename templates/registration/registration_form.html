@@ -3,18 +3,89 @@
 
 
 {% block content %}
-<div class="form-container center-container register_main" style="height: 600px;">
-    <h1>Create Your Account</h1>
-
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div class="btn-container">
-            <button type="submit" class="btn-primary btn-style">Register</button>
+<div class="form-container" style="min-height: 80vh; display: flex; justify-content: center; align-items: center; padding: 40px 20px;">
+    
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap; width: 100%; max-width: 1000px; gap: 40px; align-items: center; justify-content: center;">
+        
+        <!-- Left: Welcome Text -->
+        <div style="flex: 1; min-width: 300px; text-align: left;">
+            <h1 style="font-size: 60px; font-weight: 700; line-height: 1.2; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); margin-bottom: 20px;">Join The Munro Bag</h1>
+            <p style="color: white; font-family: var(--small-font); font-size: 20px; line-height: 1.5; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">
+                Track your climbs, upload photos, and explore Scotland's Munros.
+            </p>
         </div>
-    </form>
-    <p class="basic-text">Already registered? 
-        <a href="{% url 'login' %}" class="basic-link">Login here!</a>
-    </p>
+
+        <!-- Right: Registration Form Card -->
+        <div class="auth-card glass-box" style="flex: 1; min-width: 350px; max-width: 500px; padding: 40px; border-radius: 20px;">
+            <form method="post" class="auth-form" novalidate>
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                <div style="color: #ff6b6b; margin-bottom: 15px; font-family: var(--small-font);">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div class="form-group" style="margin-bottom: 20px; position: relative;">
+                        <label for="{{ field.id_for_label }}" style="display: block; color: #333333; font-weight: 500; font-family: var(--small-font); font-size: 18px; margin-bottom: 8px;">
+                            {{ field.label }}
+                        </label>
+                        {{ field }}
+                        {% if field.name == 'password' or field.name == 'password_confirm' or 'password' in field.name|lower %}
+                            <span class="password-toggle" onclick="togglePasswordVisibility('{{ field.id_for_label }}')" style="position: absolute; right: 15px; top: 42px; cursor: pointer; color: #666;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </span>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div style="color: #ff6b6b; font-family: var(--small-font); font-size: 14px; margin-top: 5px;">
+                                {{ field.errors|striptags }}
+                            </div>
+                        {% endif %}
+                        {# Intentionally hiding default help text to keep UI clean, but can be added back if strictly necessary #}
+                        {# {% if field.help_text %} #}
+                        {# <p class="help-text" style="color: rgba(255,255,255,0.6); font-family: var(--small-font); font-size: 12px; margin-top: 5px;">{{ field.help_text|safe }}</p> #}
+                        {# {% endif %} #}
+                    </div>
+                {% endfor %}
+
+                <div class="btn-container" style="margin-top: 30px;">
+                    <button type="submit" class="btn-primary" style="width: 100%; padding: 12px; font-size: 20px; border-radius: 8px;">Create Account</button>
+                </div>
+            </form>
+            
+            <div style="margin-top: 25px; text-align: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px;">
+                <p style="color: #333333; font-family: var(--small-font); font-size: 16px; margin: 0;">
+                    Already registered? 
+                    <a href="{% url 'login' %}" class="login-link-highlight" style="color: white; font-weight: bold; text-decoration: none; margin-left: 5px; transition: all 0.3s ease;">Login here &rarr;</a>
+                </p>
+            </div>
+        </div>
+        
+    </div>
 </div>
+
+<script>
+    // Add placeholders dynamically to registration fields
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputs = document.querySelectorAll('.auth-form input[type="text"], .auth-form input[type="password"], .auth-form input[type="email"]');
+        inputs.forEach(input => {
+            const label = document.querySelector(`label[for="${input.id}"]`);
+            if (label) {
+                input.placeholder = `Enter your ${label.innerText.toLowerCase()}`;
+            }
+        });
+    });
+
+    function togglePasswordVisibility(fieldId) {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            if (field.type === 'password') {
+                field.type = 'text';
+            } else {
+                field.type = 'password';
+            }
+        }
+    }
+</script>
 {% endblock %}

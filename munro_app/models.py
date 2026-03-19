@@ -60,11 +60,11 @@ class ClimbRecord(models.Model):
         related_name= "climb_records",) 
     
     climb_date = models.DateField()
-    total_meters_climbed = models.IntegerField()
-    total_distance = models.IntegerField(help_text = "Kilometres")
+    total_meters_climbed = models.FloatField()
+    total_distance = models.FloatField(help_text = "Kilometres")
     
     # time stored in hours as per current migrations
-    completion_time_hours = models.IntegerField()
+    completion_time_hours = models.FloatField()
 
     #again, enforcing the 1-5 range only
     star_rating = models.IntegerField(
@@ -77,6 +77,14 @@ class ClimbRecord(models.Model):
 
     #optional
     comments = models.TextField(null = True, blank =True)
+
+    @property
+    def formatted_time(self):
+        if self.completion_time_hours is None:
+            return "N/A"
+        hours = int(self.completion_time_hours)
+        minutes = int(round((self.completion_time_hours - hours) * 60))
+        return f"{hours} hr {minutes} min"
 
     def __str__(self):
         return f"{self.user} - {self.munro} (Climb Date: {self.climb_date})"

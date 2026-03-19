@@ -19,29 +19,54 @@
     {% block content %}
     <div>
 
-        <div class="center-container">
+        <div class="center-container" style="flex-direction: column; text-align: center;">
             <div>
-                <h1 class="h1-homepage">The Munro Bag</h1>
+                <h1 class="h1-homepage" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">The Munro Bag</h1>
                 {% if user.is_authenticated %}
-                <form method="get" action="{% url 'munro_app:munro_list' %}" style="display:flex; justify-content:center; gap:10px; margin-top: 20px;">
-                    <input type="text" name="search" placeholder="Search munros" style="padding:10px; width:320px; max-width:70vw;" />
-                    <button type="submit" style="padding:10px 16px;">Search</button>
-                </form>
-                <div style="display:flex; justify-content:center; margin-top: 12px;">
-                    <a href="/munros/" class="basic-link" style="color:white !important;">Browse all munros</a>
+                <div class="search" style="margin-top: 20px;">
+                    <form method="get" action="{% url 'munro_app:munro_list' %}">
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ search_query|default:'' }}"
+                            placeholder="Search Munro by name..."
+                        />
+            
+                        <select name="region">
+                            <option value="">All regions</option>
+                            {% for r in regions %}
+                                <option value="{{ r }}" {% if r == region_filter %}selected{% endif %}>
+                                    {{ r }}
+                                </option>
+                            {% endfor %}
+                        </select>
+            
+                        <button type="submit" class="search-btn">Search</button>
+            
+                        <a href="{% url 'munro_app:index' %}" class="clear-btn">Clear</a>
+                    </form>
+                </div>
+                <div style="display:flex; justify-content:center; margin-top: 25px;">
+                    <a href="/munros/" class="climb-btn" style="text-decoration: none; padding: 12px 24px; font-size: 18px;">
+                        Browse all Munros &rarr;
+                    </a>
                 </div>
                 {% else %}
-                <div class="login-link">
-                    <a href="/accounts/login/" class="login-text">User Login</a>
-                    <a href="/accounts/register/" class="login-text">Create New Account</a>
+                <p style="color: white; font-family: var(--small-font); font-size: 24px; margin-bottom: 40px; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">Track your journey across Scotland's 282 Munros</p>
+                <div class="login-link" style="gap: 20px; justify-content: center;">
+                    <a href="/accounts/login/" class="btn-primary" style="text-decoration: none; padding: 12px 30px; font-size: 20px; border-radius: 8px;">Login</a>
+                    <a href="/accounts/register/" class="btn-outline" style="text-decoration: none; padding: 12px 30px; font-size: 20px; border-radius: 8px;">Create Account</a>
+                </div>
+                <div style="margin-top: 30px;">
+                    <a href="/munros/" style="color: white; font-family: var(--small-font); font-size: 18px; text-decoration: none; border-bottom: 1px solid white; padding-bottom: 2px; transition: opacity 0.3s ease;">Explore Munros &rarr;</a>
                 </div>
                 {% endif %}
             </div>
         </div>
         
-        <div class="flex-container">
+        <div class="flex-container" style="gap: 30px; justify-content: center;">
             {% if user.is_authenticated %}
-            <div class="box-munros">
+            <div class="box-munros glass-box" style="width: 45%; max-width: 600px;">
                 <h2 style="letter-spacing: 18px;">Scotland's</h2>
                 <h2 style="letter-spacing: 4px;">Highest  Munros</h2>
                 <!-- styling the highest munros -->
@@ -50,58 +75,91 @@
                     {% for m in top_munros %}
                         <div class="top-munro">
                             <span class="munro-left">{{ m.name }}</span>
-                            <span class="munro-dots"></span>
                             <span class="munro-right">{{ m.height }} m</span>
                         </div>
                     {% endfor %}
                 {% endif %}
                 </div>
             </div>
-            <div style="width:40%; column-gap: 10%;">
-                    <div class="box-multiple" style="background-color: #A3CAE1 !important;">
-                        <h2>My Latest Climb</h2>
-                        {% if latest_climb %}
-                        <div class="flex-container">
-                            <div class="basic-text" style="text-align: left; margin-left: 20px;">
-                                <p><strong>Munro:</strong> {{ latest_climb.munro.name }}</p>
-                                <p><strong>Date of Climb:</strong> {{ latest_climb.climb_date }}</p>
-                                <p><strong>Height Climbed:</strong> {{ latest_climb.total_meters_climbed }} km</p>
-                                <p><strong>Distance:</strong> {{ latest_climb.total_distance }} km</p>
-                                <p><strong>Time:</strong> {{ latest_climb.completion_time_hours }} hours</p>
-                                <p><strong>Rating:</strong> {{ latest_climb.star_rating }} / 5</p>
+            
+            <div class="box-multiple glass-box" style="width: 45%; max-width: 600px; margin-bottom: 0; margin-top: 0;">
+                <h2>My Latest Climb</h2>
+                {% if latest_climb %}
+                <div class="latest-climb-content" style="display: flex; flex-direction: column;">
+                    <div class="basic-text" style="text-align: left; margin-left: 20px; margin-bottom: 20px;">
+                        <p class="climb-stat"><span class="stat-label">Munro:</span> <span class="stat-value">{{ latest_climb.munro.name }}</span></p>
+                        <p class="climb-stat"><span class="stat-label">Date of Climb:</span> <span class="stat-value">{{ latest_climb.climb_date }}</span></p>
+                        <p class="climb-stat"><span class="stat-label">Height Climbed:</span> <span class="stat-value">{{ latest_climb.total_meters_climbed }} km</span></p>
+                        <p class="climb-stat"><span class="stat-label">Distance:</span> <span class="stat-value">{{ latest_climb.total_distance }} km</span></p>
+                        <p class="climb-stat"><span class="stat-label">Time:</span> <span class="stat-value">{{ latest_climb.formatted_time }}</span></p>
+                        <p class="climb-stat"><span class="stat-label">Rating:</span> 
+                            <span class="stat-value star-rating-display">
+                                <span style="color: #FFD700; letter-spacing: 2px;">
+                                    {% if latest_climb.star_rating == 1 %}★☆☆☆☆{% endif %}
+                                    {% if latest_climb.star_rating == 2 %}★★☆☆☆{% endif %}
+                                    {% if latest_climb.star_rating == 3 %}★★★☆☆{% endif %}
+                                    {% if latest_climb.star_rating == 4 %}★★★★☆{% endif %}
+                                    {% if latest_climb.star_rating == 5 %}★★★★★{% endif %}
+                                </span>
+                                <span style="font-size: 14px; opacity: 0.8; margin-left: 5px;">({{ latest_climb.star_rating }}/5)</span>
+                            </span>
+                        </p>
+                    </div>
+                    {% if latest_climb_photos %}
+                    <div class="display-photo" style="display: flex; flex-direction: column; width: 100%; align-items: center; min-height: auto; margin-top: 0;">
+                        {% for photo in latest_climb_photos %}
+                            <div class="image-frame card-img-container">
+                                <img src="{{ photo.image.url }}"
+                                alt="Photo from {{ latest_climb.munro.name }}"
+                                class="climb-img"
+                                >
                             </div>
-                            {% if latest_climb_photos %}
-                            <div class="display-photo" style="display: flex; flex-direction: column;">
-                                {% for photo in latest_climb_photos %}
-                                    <img src="{{ photo.image.url }}"
-                                    alt="Photo from {{ latest_climb.munro.name }}"
-                                    class="carousel-photo climb-img {% if not forloop.first %}carousel-hidden{% endif %}"
-                                    data-index="{{ forloop.counter0 }}"
-                                    >
-                                {% endfor %}
-                                <div style="display: flex; flex-direction: row;">
-                                    <button onclick="changePhoto(-1)" class="edit-btn">← Prev</button>
-                                    <button onclick="changePhoto(1)" class="edit-btn">Next →</button> 
-                                </div>
-                            </div>
-                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                        {% if latest_climb.comments %}
+                        <div class="climb-notes-bubble">
+                            <strong class="stat-label" style="display:block; margin-bottom:5px;">Climb Notes:</strong>
+                            <p class="long-text" style="color: white !important; margin: 0;">{{ latest_climb.comments }}</p>
                         </div>
-                                {% if latest_climb.comments %}
-                                <p class="long-text" style="color: black !important; text-align: left; margin-left: 20px;"><strong class="basic-text">Climb Notes:</strong> {{ latest_climb.comments }}</p>
-                                {% endif %}
-                        {% else %}
-                            <div>
-                                <p class="basic-text">Climb a Munro recently? Make sure to log it on your <a href="/profile/" class="basic-link">profile!</a></p>
-                            </div>
                         {% endif %}
-                </div>
-                <div class="box-multiple" style="background-color: #4D86BB !important;">
-                    <h2>About Munros</h2>
-                    {% include 'information/about_munros.html' %}
-                </div>
+                {% else %}
+                    <div>
+                        <p class="basic-text">Climb a Munro recently? Make sure to log it on your <a href="/profile/" class="basic-link">profile!</a></p>
+                    </div>
+                {% endif %}
             </div>
             {% endif %}
         </div>
+
+        {% if user.is_authenticated %}
+        <div style="display: flex; justify-content: center; margin-top: 50px; margin-bottom: 50px;">
+            <div class="about-card">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <h2>About Munros</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#333" class="bi bi-card-text" viewBox="0 0 16 16">
+                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                        <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                </div>
+                
+                <p>
+                    Munros are Scottish mountains over 914m. There are 282 peaks across the Highlands.
+                </p>
+
+                <div id="about-details" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
+                    <div>
+                        {% include 'information/about_munros.html' %}
+                    </div>
+                </div>
+
+                <a href="javascript:void(0)" onclick="toggleAbout()" id="about-toggle-btn" style="display: inline-block; margin-top: 15px; color: var(--dark-blue); font-weight: bold; text-decoration: none; font-family: var(--small-font); font-size: 18px; transition: all 0.3s ease;">
+                    &rarr; Learn more
+                </a>
+            </div>
+        </div>
+        {% endif %}
     </div>
     {% endblock %}
 
