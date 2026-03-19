@@ -1,6 +1,7 @@
 certifi @ file:///C:/b/abs_85o_6fm0se/croot/certifi_1671487778835/work/certifi
 Django==2.1.5
 django-registration-redux==2.13
+django-registration==2.4.1
 dotenv==0.9.9
 Pillow==9.4.0
 python-dotenv==0.21.1
