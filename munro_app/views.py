@@ -6,8 +6,10 @@ from django.contrib import messages
 from django.db.models import Sum
 from munro_app.models import Munro, ClimbRecord, Photo, UserProfile, UserFavouriteMunro
 from munro_app.forms import UserForm, UserProfileForm, UserEditForm, ClimbRecordForm
+from django.conf import settings
 
 def index(request):
+    # print("INDEX DB ENGINE:", settings.DATABASES['default'].get('ENGINE'))
     top_munros = Munro.objects.order_by('-height')[:15]
     latest_climb = None
     latest_climb_photos = []
@@ -62,6 +64,9 @@ def register(request):
     })
 
 def user_login(request):
+    # print("DB ENGINE:", settings.DATABASES['default'].get('ENGINE'))
+    # print("DB NAME:", settings.DATABASES['default'].get('NAME'))
+    # print("DB HOST:", settings.DATABASES['default'].get('HOST'))
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
