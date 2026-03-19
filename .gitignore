@@ -14,6 +14,10 @@ munrobag\__pycache__
 
 #env
 .env
+
+# Media files (user uploads)
+media/
+
 .vscode/media/
 __pycache__/
 *.pyc
