@@ -13,31 +13,55 @@
 </div>
 
 <div class="mountains profile-body">
-    <div class="flex-container" style="justify-content: center;">
-        <div class="box-multiple" style="background-color: #4D86BB; width: 60%; margin-top: 50px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 style="margin: 0;">{{ climb.munro.name }}</h2>
-                <a href="{% url 'munro_app:user_profile' %}" class="basic-link" style="color: white !important; font-family: var(--small-font); font-size: 18px; text-decoration: underline;">&larr; Back to Profile</a>
+    <div class="flex-container" style="justify-content: center; margin-bottom: 50px;">
+        <div class="box-multiple glass-box" style="width: 80%; max-width: 1000px; margin-top: 50px; padding: 40px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 20px;">
+                <h2 style="margin: 0; font-size: 50px;">{{ climb.munro.name }}</h2>
+                <a href="{% url 'munro_app:user_profile' %}" class="clear-btn" style="text-decoration: none;">&larr; Back</a>
             </div>
             
-            <div class="basic-text" style="text-align: left; margin-left: 20px; background-color: var(--blue); padding: 30px; border-radius: 10px;">
-                <p><strong>Date of Climb:</strong> {{ climb.climb_date }}</p>
-                <p><strong>Height Climbed:</strong> {{ climb.total_meters_climbed }} km</p>
-                <p><strong>Distance:</strong> {{ climb.total_distance }} km</p>
-                <p><strong>Time:</strong> {{ climb.completion_time_hours }} hours</p>
-                <p><strong>Rating:</strong> {{ climb.star_rating }} / 5</p>
-                {% if climb.comments %}
-                <p><strong>Climb Notes:</strong> {{ climb.comments }}</p>
-                {% endif %}
-                
+            <div style="display: flex; flex-direction: row; gap: 40px; align-items: stretch; flex-wrap: wrap;">
+                <!-- Left Column: Stats -->
+                <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; justify-content: center;">
+                    <p class="climb-stat"><span class="stat-label detail-label">Date of Climb:</span> <span class="stat-value detail-text-primary">{{ climb.climb_date }}</span></p>
+                    <p class="climb-stat"><span class="stat-label detail-label">Height Climbed:</span> <span class="stat-value detail-text-primary">{{ climb.total_meters_climbed }} km</span></p>
+                    <p class="climb-stat"><span class="stat-label detail-label">Distance:</span> <span class="stat-value detail-text-primary">{{ climb.total_distance }} km</span></p>
+                    <p class="climb-stat"><span class="stat-label detail-label">Time:</span> <span class="stat-value detail-text-primary">{{ climb.formatted_time }}</span></p>
+                    <p class="climb-stat"><span class="stat-label detail-label">Rating:</span> 
+                        <span class="stat-value star-rating-display">
+                            <span style="color: #FFD700; letter-spacing: 2px;">
+                                {% if climb.star_rating == 1 %}★☆☆☆☆{% endif %}
+                                {% if climb.star_rating == 2 %}★★☆☆☆{% endif %}
+                                {% if climb.star_rating == 3 %}★★★☆☆{% endif %}
+                                {% if climb.star_rating == 4 %}★★★★☆{% endif %}
+                                {% if climb.star_rating == 5 %}★★★★★{% endif %}
+                            </span>
+                            <span style="font-size: 14px; opacity: 0.8; margin-left: 5px;">({{ climb.star_rating }}/5)</span>
+                        </span>
+                    </p>
+                    
+                    {% if climb.comments %}
+                    <div class="detail-card-notes">
+                        <strong class="stat-label detail-text-primary" style="display:block; margin-bottom:8px;">Climb Notes:</strong>
+                        <p class="long-text detail-text-primary" style="margin: 0; line-height: 1.6;">{{ climb.comments }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Right Column: Photos -->
                 {% if climb.photos.all %}
-                <div style="margin-top: 20px;">
-                    <p><strong>Photos:</strong></p>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                <div style="flex: 1; min-width: 300px; display: flex; align-items: center; justify-content: center; background-color: transparent; padding: 15px;">
+                    <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
                         {% for photo in climb.photos.all %}
-                            <img src="{{ photo.image.url }}" alt="Climb photo" style="max-width: 200px; max-height: 200px; border-radius: 5px; object-fit: cover;">
+                            <div class="image-frame detail-img-container">
+                                <img src="{{ photo.image.url }}" alt="Photo from {{ climb.munro.name }}" class="detail-image">
+                            </div>
                         {% endfor %}
                     </div>
+                </div>
+                {% else %}
+                <div style="flex: 1; min-width: 300px; display: flex; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.05); border-radius: 15px; border: 2px dashed rgba(255,255,255,0.2);">
+                    <p style="color: rgba(255,255,255,0.5); font-family: var(--small-font); font-size: 18px; text-align: center; padding: 40px;">No photos uploaded for this climb.</p>
                 </div>
                 {% endif %}
             </div>

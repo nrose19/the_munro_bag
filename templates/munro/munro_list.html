@@ -14,13 +14,21 @@
 
 <div class="mountains-munro">
 
+    {% if not user.is_authenticated %}
+    <div style="text-align: center; margin-top: -30px; margin-bottom: 20px; position: relative; z-index: 5;">
+        <a href="/" class="btn-outline" style="padding: 10px 20px; border-radius: 8px; text-decoration: none;">
+            &larr; Back to Login / Register
+        </a>
+    </div>
+    {% endif %}
+
     <div class="search">
         <form method="get" action="{% url 'munro_app:munro_list' %}">
             <input
                 type="text"
                 name="search"
                 value="{{ search_query|default:'' }}"
-                placeholder="Search by munro name"
+                placeholder="Search Munro by name..."
             />
 
             <select name="region">
@@ -32,38 +40,48 @@
                 {% endfor %}
             </select>
 
-            <button type="submit">Search</button>
+            <button type="submit" class="search-btn">Search</button>
 
-            {% if search_query or region_filter %}
-                <a href="{% url 'munro_app:munro_list' %}">Clear</a>
-            {% endif %}
+            <a href="{% url 'munro_app:munro_list' %}" class="clear-btn">Clear</a>
         </form>
     </div>
 
-    {% if munros %}
-        <div class="region-box">
-            <ul>
-                {% regroup munros by region as region_list %}
-                {% for region in region_list %}
-                <!-- styling the munros list -->
-                    <li class="individual-region">
-                        <h2>{{ region.grouper }}</h2>
-                        <div class="long-text">
-                            {% for m in region.list %}
-                                <div class="munro-row">
-                                    <span class="munro-left {% if m.id in climbed_ids %}climbed-munro{% endif %}">{{ m.name }}</span>
-                                    <span class="munro-dots"></span>
-                                    <span class="munro-right {% if m.id in climbed_ids %}climbed-munro{% endif %}">{{ m.height }} m</span>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% else %}
-        <p>No munros found.</p>
-    {% endif %}
+    <div class="munro-results-container">
+        {% if munros %}
+            <div class="region-box">
+                <ul>
+                    {% regroup munros by region as region_list %}
+                    {% for region in region_list %}
+                    <!-- styling the munros list -->
+                        <li class="individual-region">
+                            <h2>{{ region.grouper }}</h2>
+                            <div class="long-text">
+                                {% for m in region.list %}
+                                    <div class="munro-row">
+                                        <span class="munro-left {% if m.id in climbed_ids %}climbed-munro{% endif %}">{{ m.name }}</span>
+                                        <span class="munro-right {% if m.id in climbed_ids %}climbed-munro{% endif %}">{{ m.height }} m</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <h2 style="color: white; margin-bottom: 10px;">No Munros Found</h2>
+                {% if search_query or region_filter %}
+                    <p style="color: rgba(255,255,255,0.8); font-family: var(--small-font); font-size: 18px;">
+                        No results found for your search. <br>
+                        Try adjusting your search term or region filter.
+                    </p>
+                    <a href="{% url 'munro_app:munro_list' %}" class="clear-btn" style="display: inline-block; margin-top: 15px;">Clear Filters</a>
+                {% else %}
+                    <p style="color: rgba(255,255,255,0.8); font-family: var(--small-font); font-size: 18px;">There are currently no Munros available.</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
 
 </div>
 
